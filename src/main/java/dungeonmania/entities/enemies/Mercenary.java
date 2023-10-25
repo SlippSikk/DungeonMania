@@ -85,8 +85,7 @@ public class Mercenary extends Enemy implements Interactable {
             isAdjacentToPlayer = true;
     }
 
-    @Override
-    public void move(Game game) {
+    public void movement(Game game) {
         GameMap map = game.getMap();
         if (allied) {
             setMovementStrategy(new AlliedMovementStrategy(this));

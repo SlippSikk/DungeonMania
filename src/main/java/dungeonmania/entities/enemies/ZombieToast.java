@@ -16,8 +16,7 @@ public class ZombieToast extends Enemy {
         setMovementStrategy(new DefaultZombieToastMovementStrategy());
     }
 
-    @Override
-    public void move(Game game) {
+    public void movement(Game game) {
         GameMap map = game.getMap();
         if (map.getPlayer().getEffectivePotion() instanceof InvincibilityPotion) {
             setMovementStrategy(new InvincibilityPotionMovementStrategy());
