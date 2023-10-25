@@ -8,14 +8,9 @@ import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
 public class AlliedMovementStrategy implements MovementStrategy {
-    private Mercenary mercenary;
-
-    public AlliedMovementStrategy(Mercenary mercenary) {
-        this.mercenary = mercenary;
-    }
-
     @Override
     public Position nextPosition(Game game, Enemy enemy) {
+        Mercenary mercenary = (Mercenary) enemy;
         Position nextPos;
         GameMap map = game.getMap();
         Player player = game.getPlayer();

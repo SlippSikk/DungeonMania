@@ -10,29 +10,26 @@ import dungeonmania.entities.enemies.Spider;
 import dungeonmania.util.Position;
 
 public class DefaultSpiderMovementStrategy implements MovementStrategy {
-    private Spider spider;
-
-    public DefaultSpiderMovementStrategy(Spider spider) {
-        this.spider = spider;
-    }
-
     @Override
     public Position nextPosition(Game game, Enemy enemy) {
-        boolean forward = spider.isForward();
+        Spider spider = (Spider) enemy;
         Position nextPos = spider.getMovementTrajectory().get(spider.getNextPositionElement());
         List<Entity> entities = game.getMap().getEntities(nextPos);
+
         if (entities != null && entities.size() > 0 && entities.stream().anyMatch(e -> e instanceof Boulder)) {
-            forward = !forward;
+            spider.setForward(!spider.isForward());
             spider.updateNextPosition();
             spider.updateNextPosition();
         }
         nextPos = spider.getMovementTrajectory().get(spider.getNextPositionElement());
         entities = game.getMap().getEntities(nextPos);
+
         if (entities == null || entities.size() == 0
                 || entities.stream().allMatch(e -> e.canMoveOnto(game.getMap(), enemy))) {
-            game.getMap().moveTo(enemy, nextPos);
             spider.updateNextPosition();
+            return nextPos;
         }
-        return nextPos;
+
+        return spider.getPosition(); // Return current position if spider can't move
     }
 }

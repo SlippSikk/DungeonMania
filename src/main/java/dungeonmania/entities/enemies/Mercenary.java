@@ -85,10 +85,11 @@ public class Mercenary extends Enemy implements Interactable {
             isAdjacentToPlayer = true;
     }
 
-    public void movement(Game game) {
+    @Override
+    public void move(Game game) {
         GameMap map = game.getMap();
         if (allied) {
-            setMovementStrategy(new AlliedMovementStrategy(this));
+            setMovementStrategy(new AlliedMovementStrategy());
         } else if (map.getPlayer().getEffectivePotion() instanceof InvisibilityPotion) {
             setMovementStrategy(new InvisibilityPotionMovementStrategy());
         } else if (map.getPlayer().getEffectivePotion() instanceof InvincibilityPotion) {
@@ -97,7 +98,7 @@ public class Mercenary extends Enemy implements Interactable {
             // Follow hostile
             setMovementStrategy(new DefaultMercenaryMovementStrategy());
         }
-        move(game);
+        super.move(game);
     }
 
     @Override

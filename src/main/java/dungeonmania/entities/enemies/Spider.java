@@ -2,7 +2,6 @@ package dungeonmania.entities.enemies;
 
 import java.util.List;
 
-import dungeonmania.Game;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.enemies.strategies.DefaultSpiderMovementStrategy;
 import dungeonmania.util.Position;
@@ -27,7 +26,7 @@ public class Spider extends Enemy {
         movementTrajectory = position.getAdjacentPositions();
         nextPositionElement = 1;
         forward = true;
-        setMovementStrategy(new DefaultSpiderMovementStrategy(this));
+        setMovementStrategy(new DefaultSpiderMovementStrategy());
     };
 
     public void updateNextPosition() {
@@ -56,8 +55,8 @@ public class Spider extends Enemy {
         return forward;
     }
 
-    public void movement(Game game) {
-        setMovementStrategy(new DefaultSpiderMovementStrategy(this));
-        move(game);
+    public void setForward(boolean forward) {
+        this.forward = forward;
     }
+
 }
