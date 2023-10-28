@@ -31,7 +31,7 @@ public abstract class Entity {
     }
 
     // use setPosition
-    @Deprecated(forRemoval = true)
+    // @Deprecated(forRemoval = true)
     public void translate(Direction direction) {
         previousPosition = this.position;
         this.position = Position.translateBy(this.position, direction);
@@ -41,7 +41,7 @@ public abstract class Entity {
     }
 
     // use setPosition
-    @Deprecated(forRemoval = true)
+    // @Deprecated(forRemoval = true)
     public void translate(Position offset) {
         this.position = Position.translateBy(this.position, offset);
     }
