@@ -46,13 +46,14 @@ public class Bomb extends Entity implements InventoryItem {
     public void onOverlap(GameMap map, Entity entity) {
         if (state != State.SPAWNED)
             return;
+
         if (entity instanceof Player) {
-            if (!((Player) entity).pickUp(this))
-                return;
-            subs.stream().forEach(s -> s.unsubscribe(this));
-            map.destroyEntity(this);
+            boolean wasPickedUp = onPickup(map, (Player) entity);
+            if (wasPickedUp) {
+                subs.forEach(s -> s.unsubscribe(this));
+                state = State.INVENTORY;
+            }
         }
-        this.state = State.INVENTORY;
     }
 
     public void onPutDown(GameMap map, Position p) {
