@@ -31,7 +31,7 @@ public abstract class Entity {
     }
 
     // use setPosition
-    @Deprecated(forRemoval = true)
+    // @Deprecated(forRemoval = true)
     public void translate(Direction direction) {
         previousPosition = this.position;
         this.position = Position.translateBy(this.position, direction);
@@ -41,17 +41,22 @@ public abstract class Entity {
     }
 
     // use setPosition
-    @Deprecated(forRemoval = true)
+    // @Deprecated(forRemoval = true)
     public void translate(Position offset) {
         this.position = Position.translateBy(this.position, offset);
     }
 
+    public void onOverlap(GameMap map, Entity entity) {
+        return;
+    }
 
-    public abstract void onOverlap(GameMap map, Entity entity);
+    public void onMovedAway(GameMap map, Entity entity) {
+        return;
+    }
 
-    public abstract void onMovedAway(GameMap map, Entity entity);
-
-    public abstract void onDestroy(GameMap gameMap);
+    public void onDestroy(GameMap gameMap) {
+        return;
+    }
 
     public Position getPosition() {
         return position;
