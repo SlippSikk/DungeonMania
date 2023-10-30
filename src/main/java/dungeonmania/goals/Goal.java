@@ -23,8 +23,4 @@ public class Goal {
             return "";
         return goalStrategy.toString(game);
     }
-
-    public void setGoalStrategy(GoalStrategy goalStrategy) {
-        this.goalStrategy = goalStrategy;
-    }
 }
