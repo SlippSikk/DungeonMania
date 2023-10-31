@@ -1,6 +1,7 @@
 package dungeonmania.entities.playerState;
 
 import dungeonmania.entities.Player;
+import dungeonmania.entities.collectables.potions.Potion;
 
 public abstract class PlayerState {
     private Player player;
@@ -25,9 +26,6 @@ public abstract class PlayerState {
         return player;
     }
 
-    public abstract void transitionInvisible();
-
-    public abstract void transitionInvincible();
-
-    public abstract void transitionBase();
+    // Single method to handle potion effect and transition state
+    public abstract void applyPotion(Potion potion);
 }

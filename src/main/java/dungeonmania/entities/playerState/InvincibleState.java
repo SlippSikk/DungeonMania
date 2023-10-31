@@ -1,27 +1,22 @@
 package dungeonmania.entities.playerState;
 
 import dungeonmania.entities.Player;
+import dungeonmania.entities.collectables.potions.InvisibilityPotion;
+import dungeonmania.entities.collectables.potions.Potion;
 
 public class InvincibleState extends PlayerState {
     public InvincibleState(Player player) {
         super(player, true, false);
     }
 
+    // Possible state change includes other states that aren't 'this'. if 'this' then simply remain.
     @Override
-    public void transitionBase() {
+    public void applyPotion(Potion potion) {
         Player player = getPlayer();
-        player.changeState(new BaseState(player));
-    }
-
-    @Override
-    public void transitionInvincible() {
-        Player player = getPlayer();
-        player.changeState(new InvincibleState(player));
-    }
-
-    @Override
-    public void transitionInvisible() {
-        Player player = getPlayer();
-        player.changeState(new InvisibleState(player));
+        if (potion == null) {
+            player.changeState(new BaseState(player));
+        } else if (potion instanceof InvisibilityPotion) {
+            player.changeState(new InvisibleState(player));
+        }
     }
 }
