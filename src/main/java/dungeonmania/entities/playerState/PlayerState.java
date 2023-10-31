@@ -27,5 +27,11 @@ public abstract class PlayerState {
     }
 
     // Single method to handle potion effect and transition state
-    public abstract void applyPotion(Potion potion);
+    public void applyPotion(Potion potion) {
+        if (potion == null) {
+            player.changeState(new BaseState(player));
+        } else {
+            potion.applyEffect(getPlayer());
+        }
+    }
 }
