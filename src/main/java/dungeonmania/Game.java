@@ -9,13 +9,17 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityFactory;
 import dungeonmania.entities.Interactable;
 import dungeonmania.entities.Player;
+import dungeonmania.entities.buildables.Buildable;
 import dungeonmania.entities.collectables.Bomb;
+import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.collectables.potions.Potion;
 import dungeonmania.entities.enemies.Enemy;
+import dungeonmania.entities.enemies.ZombieToastSpawner;
 import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.goals.Goal;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Direction;
+import dungeonmania.util.Position;
 
 public class Game {
     private String id;
@@ -138,6 +142,10 @@ public class Game {
         }
     }
 
+    public void spawnZombie(Game game, ZombieToastSpawner zombieToastSpawner) {
+        getEntityFactory().spawnZombie(game, zombieToastSpawner);
+    }
+
     public int tick() {
         PriorityQueue<ComparableCallback> nextTickSub = new PriorityQueue<>();
         isInTick = true;
@@ -154,6 +162,26 @@ public class Game {
         sub = nextTickSub;
         tickCount++;
         return tickCount;
+    }
+
+    public void removeBuildable(Buildable buildable) {
+        getPlayer().remove(buildable);
+    }
+
+    public void removeSword(Sword sword) {
+        getPlayer().remove(sword);
+    }
+
+    public void moveEnemy(Enemy enemy, Position nextPos) {
+        getMap().moveTo(enemy, nextPos);
+    }
+
+    public List<Entity> getEntities(Position nextPos) {
+        return getMap().getEntities(nextPos);
+    }
+
+    public Potion getEffectivePotion() {
+        return getMap().getEffectivePotion();
     }
 
     public int getTick() {

@@ -3,8 +3,7 @@ package dungeonmania.entities.collectables.potions;
 import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.BattleItem;
-import dungeonmania.entities.CollectableEntity;
-
+import dungeonmania.entities.collectables.CollectableEntity;
 import dungeonmania.util.Position;
 
 public abstract class Potion extends CollectableEntity implements BattleItem {

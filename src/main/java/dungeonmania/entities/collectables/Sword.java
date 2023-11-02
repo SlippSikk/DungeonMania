@@ -3,8 +3,6 @@ package dungeonmania.entities.collectables;
 import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.BattleItem;
-import dungeonmania.entities.CollectableEntity;
-
 import dungeonmania.util.Position;
 
 public class Sword extends CollectableEntity implements BattleItem {
@@ -27,7 +25,7 @@ public class Sword extends CollectableEntity implements BattleItem {
     public void use(Game game) {
         durability--;
         if (durability <= 0) {
-            game.getPlayer().remove(this);
+            game.removeSword(this);
         }
     }
 

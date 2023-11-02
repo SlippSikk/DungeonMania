@@ -17,7 +17,7 @@ public class InvisibilityPotionMovementStrategy implements MovementStrategy {
 
         // Move random
         Random randGen = new Random();
-        List<Position> pos = enemy.getPosition().getCardinallyAdjacentPositions();
+        List<Position> pos = enemy.getCardinallyAdjacentPositions();
         pos = pos.stream().filter(p -> map.canMoveTo(enemy, p)).collect(Collectors.toList());
         if (pos.size() == 0) {
             nextPos = enemy.getPosition();

@@ -8,6 +8,7 @@ import dungeonmania.entities.Player;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.InvisibilityPotion;
+import dungeonmania.entities.collectables.potions.Potion;
 import dungeonmania.entities.enemies.strategies.AlliedMovementStrategy;
 import dungeonmania.entities.enemies.strategies.DefaultMercenaryMovementStrategy;
 import dungeonmania.entities.enemies.strategies.InvincibilityPotionMovementStrategy;
@@ -87,12 +88,12 @@ public class Mercenary extends Enemy implements Interactable {
 
     @Override
     public void move(Game game) {
-        GameMap map = game.getMap();
+        Potion potion = game.getEffectivePotion();
         if (allied) {
             setMovementStrategy(new AlliedMovementStrategy());
-        } else if (map.getPlayer().getEffectivePotion() instanceof InvisibilityPotion) {
+        } else if (potion instanceof InvisibilityPotion) {
             setMovementStrategy(new InvisibilityPotionMovementStrategy());
-        } else if (map.getPlayer().getEffectivePotion() instanceof InvincibilityPotion) {
+        } else if (potion instanceof InvincibilityPotion) {
             setMovementStrategy(new InvincibilityPotionMovementStrategy());
         } else {
             // Follow hostile
