@@ -6,10 +6,11 @@ import dungeonmania.battles.Battleable;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.enemies.strategies.MovementStrategy;
+import dungeonmania.entities.entityHelpers.OnDestroy;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public abstract class Enemy extends Entity implements Battleable {
+public abstract class Enemy extends Entity implements Battleable, OnDestroy {
     private BattleStatistics battleStatistics;
 
     private MovementStrategy movementStrategy; // default strategy

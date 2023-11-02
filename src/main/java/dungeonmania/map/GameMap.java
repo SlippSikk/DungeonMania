@@ -113,6 +113,25 @@ public class GameMap {
         });
     }
 
+    // ATTEMPT TO IMPLEMENT METHOD onMovedAway AS AN INTERFACE
+    //
+    // private void triggerMovingAwayEvent(Entity entity) {
+    //     List<Runnable> callbacks = new ArrayList<>();
+    //     getEntities(entity.getPosition()).forEach(e -> {
+    //         if (e != entity)
+    //             callbacks.add(() -> movedAway(this, entity));
+    //     });
+    //     callbacks.forEach(callback -> {
+    //         callback.run();
+    //     });
+    // }
+
+    // private void movedAway(GameMap map, Entity entity) {
+    //     if (entity instanceof Switch) {
+    //         ((Switch) entity).onMovedAway(map, entity);
+    //     }
+    // }
+
     private void triggerOverlapEvent(Entity entity) {
         List<Runnable> overlapCallbacks = new ArrayList<>();
         getEntities(entity.getPosition()).forEach(e -> {
@@ -197,7 +216,15 @@ public class GameMap {
 
     public void destroyEntity(Entity entity) {
         removeNode(entity);
-        entity.onDestroy(this);
+        destroy(entity);
+    }
+
+    public void destroy(Entity entity) {
+        if (entity instanceof Enemy) {
+            ((Enemy) entity).onDestroy(this);
+        } else if (entity instanceof ZombieToastSpawner) {
+            ((ZombieToastSpawner) entity).onDestroy(this);
+        }
     }
 
     public void addEntity(Entity entity) {
@@ -242,6 +269,11 @@ public class GameMap {
 
     public <T extends Entity> List<T> getEntities(Class<T> type) {
         return getEntities().stream().filter(type::isInstance).map(type::cast).collect(Collectors.toList());
+    }
+
+    public boolean checkForType(Entity entity, Class<?> type) {
+        System.out.println(type.isInstance(entity));
+        return type.isInstance(entity);
     }
 
     public Player getPlayer() {

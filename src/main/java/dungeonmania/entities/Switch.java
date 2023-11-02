@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dungeonmania.entities.collectables.Bomb;
+import dungeonmania.entities.entityHelpers.OnMovedAway;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class Switch extends Entity {
+public class Switch extends Entity implements OnMovedAway {
     private boolean activated;
     private List<Bomb> bombs = new ArrayList<>();
 

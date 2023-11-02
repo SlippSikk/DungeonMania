@@ -54,10 +54,6 @@ public abstract class Entity {
         return;
     }
 
-    public void onDestroy(GameMap gameMap) {
-        return;
-    }
-
     public Position getPosition() {
         return position;
     }
