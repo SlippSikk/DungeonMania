@@ -8,6 +8,7 @@ import dungeonmania.battles.BattleStatistics;
 import dungeonmania.battles.Battleable;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.collectables.Treasure;
+import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.Potion;
 import dungeonmania.entities.enemies.Enemy;
 import dungeonmania.entities.enemies.Mercenary;
@@ -115,15 +116,15 @@ public class Player extends Entity implements Battleable {
     public void triggerNext(int currentTick) {
         if (queue.isEmpty()) {
             inEffective = null;
-
-            state.applyPotion(inEffective);
+            state.transitionBase();
             return;
         }
         inEffective = queue.remove();
-
-        // Change state
-        state.applyPotion(inEffective);
-
+        if (inEffective instanceof InvincibilityPotion) {
+            state.transitionInvincible();
+        } else {
+            state.transitionInvisible();
+        }
         nextTrigger = currentTick + inEffective.getDuration();
     }
 

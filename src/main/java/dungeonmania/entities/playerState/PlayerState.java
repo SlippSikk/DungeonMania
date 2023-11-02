@@ -1,7 +1,6 @@
 package dungeonmania.entities.playerState;
 
 import dungeonmania.entities.Player;
-import dungeonmania.entities.collectables.potions.Potion;
 
 public abstract class PlayerState {
     private Player player;
@@ -26,12 +25,9 @@ public abstract class PlayerState {
         return player;
     }
 
-    // Single method to handle potion effect and transition state
-    public void applyPotion(Potion potion) {
-        if (potion == null) {
-            player.changeState(new BaseState(player));
-        } else {
-            potion.applyEffect(getPlayer());
-        }
-    }
+    public abstract void transitionInvisible();
+
+    public abstract void transitionInvincible();
+
+    public abstract void transitionBase();
 }
