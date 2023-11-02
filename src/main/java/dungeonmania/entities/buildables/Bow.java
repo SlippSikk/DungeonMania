@@ -1,31 +1,22 @@
 package dungeonmania.entities.buildables;
 
-import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 
 public class Bow extends Buildable {
-    private int durability;
+    private double health = 0;
+    private double attack = 0;
+    private double defence = 0;
+    private double attackMagnifier = 2;
+    private double damageReducer = 2;
 
     public Bow(int durability) {
-        super(null);
-        this.durability = durability;
-    }
-
-    @Override
-    public void use(Game game) {
-        durability--;
-        if (durability <= 0) {
-            game.getPlayer().remove(this);
-        }
+        super(null, durability);
     }
 
     @Override
     public BattleStatistics applyBuff(BattleStatistics origin) {
-        return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 2, 1));
+        return BattleStatistics.applyBuff(origin,
+                new BattleStatistics(health, attack, defence, attackMagnifier, damageReducer));
     }
 
-    @Override
-    public int getDurability() {
-        return durability;
-    }
 }
