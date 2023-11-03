@@ -13,15 +13,15 @@ public class DefaultSpiderMovementStrategy implements MovementStrategy {
     @Override
     public Position nextPosition(Game game, Enemy enemy) {
         Spider spider = (Spider) enemy;
-        Position nextPos = spider.getMovementTrajectory().get(spider.getNextPositionElement());
-        List<Entity> entities = game.getMap().getEntities(nextPos);
+        Position nextPos = spider.getNextPosition();
+        List<Entity> entities = game.getEntities(nextPos);
 
         if (entities != null && entities.size() > 0 && entities.stream().anyMatch(e -> e instanceof Boulder)) {
             spider.setForward(!spider.isForward());
             spider.updateNextPosition();
             spider.updateNextPosition();
         }
-        nextPos = spider.getMovementTrajectory().get(spider.getNextPositionElement());
+        nextPos = spider.getNextPosition();
         entities = game.getMap().getEntities(nextPos);
 
         if (entities == null || entities.size() == 0

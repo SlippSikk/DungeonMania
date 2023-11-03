@@ -13,6 +13,7 @@ import dungeonmania.entities.Player;
 import dungeonmania.entities.Portal;
 import dungeonmania.entities.Switch;
 import dungeonmania.entities.collectables.Bomb;
+import dungeonmania.entities.collectables.potions.Potion;
 import dungeonmania.entities.enemies.Enemy;
 import dungeonmania.entities.enemies.ZombieToastSpawner;
 import dungeonmania.util.Direction;
@@ -274,6 +275,18 @@ public class GameMap {
     public boolean checkForType(Entity entity, Class<?> type) {
         System.out.println(type.isInstance(entity));
         return type.isInstance(entity);
+    }
+
+    public void battle(Player player, Enemy enemy) {
+        getGame().battle(player, enemy);
+    }
+
+    public Potion getEffectivePotion() {
+        return getPlayer().getEffectivePotion();
+    }
+
+    public Position getPlayerPosition() {
+        return getPlayer().getPosition();
     }
 
     public Player getPlayer() {

@@ -16,7 +16,7 @@ public class DefaultZombieToastMovementStrategy implements MovementStrategy {
     public Position nextPosition(Game game, Enemy enemy) {
         Position nextPos;
         GameMap map = game.getMap();
-        List<Position> pos = enemy.getPosition().getCardinallyAdjacentPositions();
+        List<Position> pos = enemy.getCardinallyAdjacentPositions();
         pos = pos.stream().filter(p -> map.canMoveTo(enemy, p)).collect(Collectors.toList());
         if (pos.size() == 0) {
             nextPos = enemy.getPosition();

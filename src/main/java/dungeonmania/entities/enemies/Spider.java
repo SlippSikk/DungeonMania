@@ -43,6 +43,10 @@ public class Spider extends Enemy {
         }
     }
 
+    public Position getNextPosition() {
+        return getMovementTrajectory().get(getNextPositionElement());
+    }
+
     public List<Position> getMovementTrajectory() {
         return movementTrajectory;
     }

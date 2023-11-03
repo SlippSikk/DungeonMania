@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.battles.Battleable;
 import dungeonmania.entities.collectables.Bomb;
@@ -150,9 +151,21 @@ public class Player extends Entity implements Battleable {
         inventory.remove(item);
     }
 
+    public double getPlayerHealth() {
+        return getBattleStatistics().getHealth();
+    }
+
+    public void setPlayerHealth(double newHealth) {
+        getBattleStatistics().setHealth(newHealth);
+    }
+
     @Override
     public BattleStatistics getBattleStatistics() {
         return battleStatistics;
+    }
+
+    public List<BattleItem> getBattleItems() {
+        return getInventory().getEntities(BattleItem.class);
     }
 
     public <T extends InventoryItem> int countEntityOfType(Class<T> itemType) {
@@ -166,5 +179,9 @@ public class Player extends Entity implements Battleable {
             return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 1, 1, false, false));
         }
         return origin;
+    }
+
+    public void useWeapon(Game game) {
+        getInventory().useWeapon(game);
     }
 }

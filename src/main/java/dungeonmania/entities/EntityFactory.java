@@ -37,7 +37,7 @@ public class EntityFactory {
         if (rate == 0 || (tick + 1) % rate != 0)
             return;
         int radius = 20;
-        Position player = map.getPlayer().getPosition();
+        Position player = map.getPlayerPosition();
 
         Spider dummySpider = buildSpider(new Position(0, 0)); // for checking possible positions
 
@@ -67,7 +67,7 @@ public class EntityFactory {
         int spawnInterval = config.optInt("zombie_spawn_interval", ZombieToastSpawner.DEFAULT_SPAWN_INTERVAL);
         if (spawnInterval == 0 || (tick + 1) % spawnInterval != 0)
             return;
-        List<Position> pos = spawner.getPosition().getCardinallyAdjacentPositions();
+        List<Position> pos = spawner.getCardinallyAdjacentPositions();
         pos = pos.stream().filter(p -> !map.getEntities(p).stream().anyMatch(e -> (e instanceof Wall)))
                 .collect(Collectors.toList());
         if (pos.size() == 0)

@@ -1,5 +1,7 @@
 package dungeonmania.entities.enemies;
 
+import java.util.List;
+
 import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.battles.Battleable;
@@ -27,7 +29,7 @@ public abstract class Enemy extends Entity implements Battleable, OnDestroy {
 
     public void move(Game game) {
         Position nextPos = movementStrategy.nextPosition(game, this);
-        game.getMap().moveTo(this, nextPos);
+        game.moveEnemy(this, nextPos);
     }
 
     @Override
@@ -35,16 +37,28 @@ public abstract class Enemy extends Entity implements Battleable, OnDestroy {
         return entity instanceof Player;
     }
 
+    public double getEnemyHealth() {
+        return getBattleStatistics().getHealth();
+    }
+
+    public void setEmemyHealth(double newHealth) {
+        getBattleStatistics().setHealth(newHealth);
+    }
+
     @Override
     public BattleStatistics getBattleStatistics() {
         return battleStatistics;
+    }
+
+    public List<Position> getCardinallyAdjacentPositions() {
+        return getPosition().getCardinallyAdjacentPositions();
     }
 
     @Override
     public void onOverlap(GameMap map, Entity entity) {
         if (entity instanceof Player) {
             Player player = (Player) entity;
-            map.getGame().battle(player, this);
+            map.battle(player, this);
         }
     }
 
