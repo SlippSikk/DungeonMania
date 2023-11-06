@@ -11,8 +11,13 @@
             "y": 3
         },
         {
-            "type": "zombie_toast_spawner",
+            "type": "sword",
             "x": 2,
+            "y": 2
+        },
+        {
+            "type": "zombie_toast_spawner",
+            "x": 3,
             "y": 2
         },
         {
