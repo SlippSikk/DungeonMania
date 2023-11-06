@@ -47,7 +47,7 @@ public class MicroevolutionTest {
 
     //     assertTrue(TestUtils.getGoals(res).contains(":enemies"));
 
-    //     // move player right and kill spider
+    //     // move player down and kill spider
     //     res = dmc.tick(Direction.DOWN);
     //     assertTrue(TestUtils.getGoals(res).contains(":enemies"));
 
@@ -136,9 +136,32 @@ public class MicroevolutionTest {
     //     assertFalse(TestUtils.getGoals(res).contains(":exit"));
     // }
 
+    // @Test
+    // @Tag("16-5")
+    // @DisplayName("Test 0 enemies but spawner exists")
+    // public void zeroEnemiesAndSpawner() {
+    //     DungeonManiaController dmc = new DungeonManiaController();
+    //     String config = "c_microevolutionTest_zeroEnemiesAndSpawner";
+    //     DungeonResponse res = dmc.newGame("d_microevolutionTest_zeroEnemiesAndSpawner", config);
+
+    //     assertTrue(TestUtils.getGoals(res).contains(":enemies"));
+
+    //     // move player down
+    //     res = dmc.tick(Direction.DOWN);
+    //     assertTrue(TestUtils.getGoals(res).contains(":enemies"));
+
+    //     // move player right to get sword
+    //     res = dmc.tick(Direction.RIGHT);
+    //     assertTrue(TestUtils.getGoals(res).contains(":enemies"));
+
+    //     // move right destroy spawner
+    //     res = dmc.tick(Direction.RIGHT);
+    //     assertFalse(TestUtils.getGoals(res).contains(":enemies"));
+    // }
+
     // optional tests: may or may not implement later depending on time
     @Test
-    @Tag("16-5")
+    @Tag("16-6")
     @DisplayName("Test complex goal: enemies AND boulders AND exit")
     public void complexGoalEnemies2() {
         DungeonManiaController dmc = new DungeonManiaController();
@@ -147,7 +170,7 @@ public class MicroevolutionTest {
     }
 
     @Test
-    @Tag("16-6")
+    @Tag("16-7")
     @DisplayName("Test complex goal: boulders AND treasure OR enemies")
     public void complexGoalEnemies3() {
         DungeonManiaController dmc = new DungeonManiaController();
@@ -156,7 +179,7 @@ public class MicroevolutionTest {
     }
 
     @Test
-    @Tag("16-7")
+    @Tag("16-8")
     @DisplayName("Test complex goal enemies: boulders AND treasure OR enemies 2")
     public void complexGoalEnemies4() {
         DungeonManiaController dmc = new DungeonManiaController();
