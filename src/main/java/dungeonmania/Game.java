@@ -36,6 +36,8 @@ public class Game {
     public static final int AI_MOVEMENT_CALLBACK = 3;
     public static final int ITEM_LONGEVITY_UPDATE = 4;
 
+    private int enemiesKilled = 0;
+
     private ComparableCallback currentAction = null;
 
     private int tickCount = 0;
@@ -85,6 +87,10 @@ public class Game {
             map.destroyEntity(player);
         }
         if (enemy.getBattleStatistics().getHealth() <= 0) {
+            if (!(enemy instanceof ZombieToastSpawner)) {
+                System.out.println(enemy.getClass());
+                enemiesKilled++;
+            }
             map.destroyEntity(enemy);
         }
     }
@@ -178,6 +184,10 @@ public class Game {
 
     public List<Entity> getEntities(Position nextPos) {
         return getMap().getEntities(nextPos);
+    }
+
+    public int getEnemiesKilled() {
+        return enemiesKilled;
     }
 
     public Potion getEffectivePotion() {
