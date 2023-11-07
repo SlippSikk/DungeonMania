@@ -45,6 +45,8 @@ public class MicroevolutionTest {
         DungeonManiaController dmc = new DungeonManiaController();
         DungeonResponse res = dmc.newGame("d_microevolutionTest_spawner", "c_microevolutionTest_spawner");
 
+        String zombieSp = TestUtils.getEntitiesStream(res, "zombie_toast_spawner").findFirst().get().getId();
+
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
 
         // move player down and kill spider
@@ -55,8 +57,8 @@ public class MicroevolutionTest {
         res = dmc.tick(Direction.RIGHT);
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
 
-        // move right destroy spawner
-        res = dmc.tick(Direction.RIGHT);
+        // destroy spawner
+        res = assertDoesNotThrow(() -> dmc.interact(zombieSp));
         assertFalse(TestUtils.getGoals(res).contains(":enemies"));
     }
 
@@ -68,6 +70,8 @@ public class MicroevolutionTest {
         String config = "c_microevolutionTest_multipleEnemies";
         DungeonResponse res = dmc.newGame("d_microevolutionTest_multipleEnemies", config);
 
+        String zombieSp = TestUtils.getEntitiesStream(res, "zombie_toast_spawner").findFirst().get().getId();
+
         // player begins at (2, 0) and moves down to (2, 1) to collect sword
         res = dmc.tick(Direction.DOWN);
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
@@ -76,7 +80,11 @@ public class MicroevolutionTest {
         res = dmc.tick(Direction.LEFT);
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
 
-        // player moves to (1, 2) and kills spider and destroy spawner
+        // destroy spawner
+        res = assertDoesNotThrow(() -> dmc.interact(zombieSp));
+        assertTrue(TestUtils.getGoals(res).contains(":enemies"));
+
+        // player moves to (1, 2) and kills spider
         res = dmc.tick(Direction.DOWN);
         assertFalse(TestUtils.getGoals(res).contains(":enemies"));
     }
@@ -89,6 +97,8 @@ public class MicroevolutionTest {
         String config = "c_microevolutionTest_complexGoalEnemies";
         DungeonResponse res = dmc.newGame("d_microevolutionTest_complexGoalEnemies", config);
 
+        String zombieSp = TestUtils.getEntitiesStream(res, "zombie_toast_spawner").findFirst().get().getId();
+
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
         assertTrue(TestUtils.getGoals(res).contains(":exit"));
 
@@ -102,7 +112,13 @@ public class MicroevolutionTest {
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
         assertTrue(TestUtils.getGoals(res).contains(":exit"));
 
-        // player moves to (1, 2) and destroys spawner
+        // destroy spawner
+        res = assertDoesNotThrow(() -> dmc.interact(zombieSp));
+        assertTrue(TestUtils.getGoals(res).contains(":enemies"));
+
+        String zombieSp2 = TestUtils.getEntitiesStream(res, "zombie_toast_spawner").findFirst().get().getId();
+
+        // player moves to (1, 2)
         res = dmc.tick(Direction.DOWN);
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
         assertTrue(TestUtils.getGoals(res).contains(":exit"));
@@ -117,7 +133,12 @@ public class MicroevolutionTest {
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
         assertTrue(TestUtils.getGoals(res).contains(":exit"));
 
-        // player moves to (1, 5) and destroys spawner
+        // destroy spawner
+        res = assertDoesNotThrow(() -> dmc.interact(zombieSp2));
+        assertFalse(TestUtils.getGoals(res).contains(":enemies"));
+        assertTrue(TestUtils.getGoals(res).contains(":exit"));
+
+        // player moves to (1, 5)
         res = dmc.tick(Direction.DOWN);
         assertFalse(TestUtils.getGoals(res).contains(":enemies"));
         assertTrue(TestUtils.getGoals(res).contains(":exit"));
@@ -136,6 +157,8 @@ public class MicroevolutionTest {
         String config = "c_microevolutionTest_zeroEnemiesAndSpawner";
         DungeonResponse res = dmc.newGame("d_microevolutionTest_zeroEnemiesAndSpawner", config);
 
+        String zombieSp = TestUtils.getEntitiesStream(res, "zombie_toast_spawner").findFirst().get().getId();
+
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
 
         // move player down
@@ -146,8 +169,8 @@ public class MicroevolutionTest {
         res = dmc.tick(Direction.RIGHT);
         assertTrue(TestUtils.getGoals(res).contains(":enemies"));
 
-        // move right destroy spawner
-        res = dmc.tick(Direction.RIGHT);
+        // destroy spawner
+        res = assertDoesNotThrow(() -> dmc.interact(zombieSp));
         assertFalse(TestUtils.getGoals(res).contains(":enemies"));
     }
 
