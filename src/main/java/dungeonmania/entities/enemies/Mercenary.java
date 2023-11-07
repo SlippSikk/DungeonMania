@@ -5,6 +5,7 @@ import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Interactable;
 import dungeonmania.entities.Player;
+import dungeonmania.entities.buildables.Sceptre;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.InvisibilityPotion;
@@ -29,6 +30,10 @@ public class Mercenary extends Enemy implements Interactable {
     private double allyDefence;
     private boolean allied = false;
     private boolean isAdjacentToPlayer = false;
+
+    private boolean isMindControlled = false;
+
+    private int endMindControlTick = 0;
 
     public Mercenary(Position position, double health, double attack, int bribeAmount, int bribeRadius,
             double allyAttack, double allyDefence) {
@@ -69,6 +74,15 @@ public class Mercenary extends Enemy implements Interactable {
     }
 
     /**
+     * check whether the current merc can be mind controlled
+     * @param player
+     * @return
+     */
+    private boolean canBeControlled(Player player) {
+        return player.countEntityOfType(Sceptre.class) >= 1 && !isMindControlled;
+    }
+
+    /**
      * bribe the merc
      */
     private void bribe(Player player) {
@@ -78,17 +92,40 @@ public class Mercenary extends Enemy implements Interactable {
 
     }
 
+    /*
+     * mind control the mercenary
+     */
+    private void mindControl(Player player, Game game) {
+        Sceptre s = player.getSceptre();
+        s.use(game);
+        isMindControlled = true;
+        endMindControlTick = game.getTick() + s.getDuration();
+    }
+
     @Override
     public void interact(Player player, Game game) {
         allied = true;
-        bribe(player);
-        if (!isAdjacentToPlayer && Position.isAdjacent(player.getPosition(), getPosition()))
-            isAdjacentToPlayer = true;
+
+        if (canBeBribed(player)) {
+            bribe(player);
+            if (!isAdjacentToPlayer && Position.isAdjacent(player.getPosition(), getPosition()))
+                isAdjacentToPlayer = true;
+        } else {
+            mindControl(player, game);
+        }
+
     }
 
     @Override
     public void move(Game game) {
         Potion potion = game.getEffectivePotion();
+        if (isMindControlled) {
+            if (game.getTick() == endMindControlTick) {
+                isMindControlled = false;
+                allied = false;
+            }
+        }
+
         if (allied) {
             setMovementStrategy(new AlliedMovementStrategy());
         } else if (potion instanceof InvisibilityPotion) {
@@ -104,7 +141,7 @@ public class Mercenary extends Enemy implements Interactable {
 
     @Override
     public boolean isInteractable(Player player) {
-        return !allied && canBeBribed(player);
+        return !allied && (canBeBribed(player) || canBeControlled(player));
     }
 
     @Override
