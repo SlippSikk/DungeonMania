@@ -87,10 +87,7 @@ public class Game {
             map.destroyEntity(player);
         }
         if (enemy.getBattleStatistics().getHealth() <= 0) {
-            if (!(enemy instanceof ZombieToastSpawner)) {
-                System.out.println(enemy.getClass());
-                enemiesKilled++;
-            }
+            enemiesKilled++;
             map.destroyEntity(enemy);
         }
     }
