@@ -70,7 +70,20 @@ public class Mercenary extends Enemy implements Interactable {
      * @return
      */
     private boolean canBeBribed(Player player) {
-        return bribeRadius >= 0 && player.countEntityOfType(Treasure.class) >= bribeAmount;
+
+        // Get the mercenary's position
+        int mercX = this.getPosition().getX();
+        int mercY = this.getPosition().getY();
+
+        // Get the player's position
+        int playerX = player.getPosition().getX();
+        int playerY = player.getPosition().getY();
+
+        // Check if the player is within the bribe radius
+        boolean isWithinBribeRadius = Math.abs(mercX - playerX) <= bribeRadius
+                && Math.abs(mercY - playerY) <= bribeRadius;
+
+        return isWithinBribeRadius && player.countEntityOfType(Treasure.class) >= bribeAmount;
     }
 
     /**
@@ -108,11 +121,13 @@ public class Mercenary extends Enemy implements Interactable {
 
         if (canBeBribed(player)) {
             bribe(player);
-            if (!isAdjacentToPlayer && Position.isAdjacent(player.getPosition(), getPosition()))
-                isAdjacentToPlayer = true;
-        } else {
+
+        } else if (canBeControlled(player)) {
             mindControl(player, game);
         }
+
+        if (!isAdjacentToPlayer && Position.isAdjacent(player.getPosition(), getPosition()))
+            isAdjacentToPlayer = true;
 
     }
 

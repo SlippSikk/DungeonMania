@@ -15,6 +15,9 @@ public class AlliedMovementStrategy implements MovementStrategy {
         GameMap map = game.getMap();
         Player player = game.getPlayer();
 
+        if (!mercenary.isAdjacentToPlayer() && Position.isAdjacent(player.getPosition(), mercenary.getPosition()))
+            mercenary.setAdjacentToPlayer(true);
+
         nextPos = mercenary.isAdjacentToPlayer() ? player.getPreviousDistinctPosition()
                 : map.dijkstraPathFind(enemy.getPosition(), player.getPosition(), enemy);
 
