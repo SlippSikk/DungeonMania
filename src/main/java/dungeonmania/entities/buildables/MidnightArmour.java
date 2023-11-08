@@ -5,14 +5,14 @@ import dungeonmania.battles.BattleStatistics;
 import dungeonmania.util.Position;
 
 public class MidnightArmour extends Buildable {
-    private int durability = Integer.MAX_VALUE;
+    private static int durability = Integer.MAX_VALUE;
     private static final int DEFAULT_VAL = 1;
 
     private int attack;
     private int defence;
 
     public MidnightArmour(Position position, int attack, int defence) {
-        super(position);
+        super(position, durability);
         this.attack = attack;
         this.defence = defence;
     }
@@ -25,11 +25,6 @@ public class MidnightArmour extends Buildable {
     @Override
     public BattleStatistics applyBuff(BattleStatistics origin) {
         return BattleStatistics.applyBuff(origin, new BattleStatistics(0, attack, defence, DEFAULT_VAL, DEFAULT_VAL));
-    }
-
-    @Override
-    public int getDurability() {
-        return durability;
     }
 
 }

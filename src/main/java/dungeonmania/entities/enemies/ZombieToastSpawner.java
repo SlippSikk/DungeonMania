@@ -3,29 +3,36 @@ package dungeonmania.entities.enemies;
 import java.util.List;
 
 import dungeonmania.Game;
+import dungeonmania.entities.Entity;
 import dungeonmania.entities.Interactable;
 import dungeonmania.entities.Player;
+import dungeonmania.entities.entityHelpers.OnDestroy;
+import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class ZombieToastSpawner extends Enemy implements Interactable {
+public class ZombieToastSpawner extends Entity implements Interactable, OnDestroy {
     public static final int DEFAULT_SPAWN_INTERVAL = 0;
 
     public ZombieToastSpawner(Position position, int spawnInterval) {
-        super(position, 1, 0);
+        super(position);
     }
 
     public void spawn(Game game) {
-        game.spawnZombie(game, this);
+        game.getEntityFactory().spawnZombie(game, this);
+    }
+
+    @Override
+    public void onDestroy(GameMap map) {
+        Game g = map.getGame();
+        g.unsubscribe(getId());
     }
 
     @Override
     public void interact(Player player, Game game) {
-        player.useWeapon(game);
-    }
+        player.getInventory().getWeapon().use(game);
+        GameMap gm = game.getMap();
+        gm.destroyEntity(this);
 
-    @Override
-    public void move(Game game) {
-        return;
     }
 
     @Override
@@ -36,4 +43,5 @@ public class ZombieToastSpawner extends Enemy implements Interactable {
     public List<Position> getCardinallyAdjacentPositions() {
         return getPosition().getCardinallyAdjacentPositions();
     }
+
 }
