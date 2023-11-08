@@ -11,6 +11,7 @@ import dungeonmania.util.Position;
 public class Switch extends Entity implements OnMovedAway {
     private boolean activated;
     private List<Bomb> bombs = new ArrayList<>();
+    private List<Wire> wires = new ArrayList<>();
 
     public Switch(Position position) {
         super(position.asLayer(Entity.ITEM_LAYER));
@@ -24,6 +25,12 @@ public class Switch extends Entity implements OnMovedAway {
         bombs.add(bomb);
         if (activated) {
             bombs.stream().forEach(b -> b.notify(map));
+        }
+    }
+
+    public void activateWires(GameMap map) {
+        if (activated) {
+            wires.stream().forEach(w -> w.notify(map));
         }
     }
 

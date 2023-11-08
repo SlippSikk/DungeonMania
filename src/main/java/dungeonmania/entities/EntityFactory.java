@@ -150,7 +150,12 @@ public class EntityFactory {
             return new Arrow(pos);
         case "bomb":
             int bombRadius = config.optInt("bomb_radius", Bomb.DEFAULT_RADIUS);
-            return new Bomb(pos, bombRadius);
+            String logic = config.optString("logic");
+            if (logic == "") {
+                return new Bomb(pos, bombRadius, null);
+            } else {
+                return new Bomb(pos, bombRadius, logic);
+            }
         case "invisibility_potion":
             int invisibilityPotionDuration = config.optInt("invisibility_potion_duration",
                     InvisibilityPotion.DEFAULT_DURATION);
@@ -171,6 +176,13 @@ public class EntityFactory {
             return new Door(pos, jsonEntity.getInt("key"));
         case "key":
             return new Key(pos, jsonEntity.getInt("key"));
+        case "light_bulb_off":
+            return new LightBulbOff(pos, jsonEntity.getString("logic"));
+        case "wire":
+            boolean isActive = false;
+            return new Wire(pos, isActive);
+        case "switch_door":
+            return new SwitchDoor(pos, jsonEntity.getString("logic"));
         default:
             return null;
         }

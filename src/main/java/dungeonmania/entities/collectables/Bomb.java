@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.Switch;
+import dungeonmania.entities.Wire;
 import dungeonmania.map.GameMap;
 
 public class Bomb extends CollectableEntity {
@@ -20,16 +21,26 @@ public class Bomb extends CollectableEntity {
     private State state;
     private int radius;
 
-    private List<Switch> subs = new ArrayList<>();
+    private String logic;
+    private boolean allPrevWiresUnactivated;
 
-    public Bomb(Position position, int radius) {
+    private List<Switch> subs = new ArrayList<>();
+    private List<Wire> wires = new ArrayList<>();
+
+    public Bomb(Position position, int radius, String logic) {
         super(position);
         state = State.SPAWNED;
         this.radius = radius;
+        this.logic = logic;
+        this.allPrevWiresUnactivated = true;
     }
 
     public void subscribe(Switch s) {
         this.subs.add(s);
+    }
+
+    public void subscribeWire(Wire w) {
+        this.wires.add(w);
     }
 
     public void notify(GameMap map) {
@@ -76,7 +87,30 @@ public class Bomb extends CollectableEntity {
         }
     }
 
+    public boolean checkLogic() {
+        switch (getLogic()) {
+        case "and":
+            return wires.stream().allMatch(wire -> wire.isActive());
+        case "or":
+            return wires.stream().anyMatch(wire -> wire.isActive());
+        case "xor":
+            return wires.stream().filter(wire -> wire.isActive()).count() == 1;
+        case "co_and":
+            return wires.stream().allMatch(wire -> wire.isActive()) && isAllPrevWiresUnactivated();
+        default:
+            return false;
+        }
+    }
+
     public State getState() {
         return state;
+    }
+
+    public String getLogic() {
+        return logic;
+    }
+
+    public boolean isAllPrevWiresUnactivated() {
+        return allPrevWiresUnactivated;
     }
 }
