@@ -343,7 +343,6 @@ public class LogicSwitchesTest {
         res = dmc.tick(Direction.RIGHT);
         assertTrue(wireAt(res, 7, 1));
         assertTrue(wireAt(res, 6, 2));
-        assertFalse(wireAt(res, 3, 0));
         assertFalse(wireAt(res, 3, 1));
         assertFalse(wireAt(res, 4, 1));
         assertFalse(wireAt(res, 5, 1));

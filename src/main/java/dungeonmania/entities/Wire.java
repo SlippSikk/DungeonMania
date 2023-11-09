@@ -20,10 +20,6 @@ public class Wire extends Entity {
     public Wire(Position position, boolean isActive) {
         super(position);
         this.isActive = isActive;
-
-        System.out.println("Wires: " + wires);
-        System.out.println("Logical Entities: " + logicalEntities);
-        System.out.println("Bombs: " + logicalBombs + "\n");
     }
 
     @Override
@@ -73,7 +69,8 @@ public class Wire extends Entity {
     }
 
     public void addWire(Wire w) {
-        wires.add(w);
+        if (!wires.contains(w))
+            wires.add(w);
     }
 
     public void removeWire(Wire w) {
@@ -105,5 +102,39 @@ public class Wire extends Entity {
         if (isActive) {
             notify();
         }
+    }
+
+    public List<Position> getWires() {
+        List<Position> list = new ArrayList<>();
+        for (Wire w : wires) {
+            if (w != this) {
+                list.add(w.getPosition());
+            }
+        }
+        return list;
+    }
+
+    public List<Position> getSwitches() {
+        List<Position> list = new ArrayList<>();
+        for (Switch w : switches) {
+            list.add(w.getPosition());
+        }
+        return list;
+    }
+
+    public List<Position> getLogicalEntities() {
+        List<Position> list = new ArrayList<>();
+        for (LogicalEntity w : logicalEntities) {
+            list.add(w.getPosition());
+        }
+        return list;
+    }
+
+    public List<Position> getBombs() {
+        List<Position> list = new ArrayList<>();
+        for (Bomb w : logicalBombs) {
+            list.add(w.getPosition());
+        }
+        return list;
     }
 }

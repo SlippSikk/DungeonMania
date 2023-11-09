@@ -41,6 +41,7 @@ public class GameMap {
         initRegisterMovables();
         initRegisterSpawners();
         initRegisterBombsAndSwitches();
+        initRegisterWireConnections();
         initRegisterSwitchesAndWires();
         initRegisterWiresAndLogicalBombs();
         initRegisterWiresAndLogicalEntities();
@@ -56,6 +57,16 @@ public class GameMap {
                     w.addLogicalEntity(le);
                 }
             }
+        }
+
+        for (LogicalEntity le : logicalEntities) {
+            System.out.println("Wires " + le.getWires() + "\n");
+        }
+        for (Wire w : wires) {
+            System.out.println("Wires: " + w.getWires());
+            System.out.println("Logical Entities: " + w.getLogicalEntities());
+            System.out.println("Switches: " + w.getSwitches());
+            System.out.println("Bombs: " + w.getBombs() + "\n");
         }
     }
 
@@ -93,6 +104,18 @@ public class GameMap {
                 if (Position.isAdjacent(b.getPosition(), s.getPosition())) {
                     b.subscribe(s);
                     s.subscribe(b);
+                }
+            }
+        }
+    }
+
+    private void initRegisterWireConnections() {
+        List<Wire> wires = getEntities(Wire.class);
+        for (Wire w1 : wires) {
+            for (Wire w2 : wires) {
+                if (Position.isAdjacent(w1.getPosition(), w2.getPosition())) {
+                    w1.addWire(w2);
+                    w2.addWire(w1);
                 }
             }
         }

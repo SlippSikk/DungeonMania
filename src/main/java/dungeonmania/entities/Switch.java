@@ -29,7 +29,8 @@ public class Switch extends Entity implements OnMovedAway {
     }
 
     public void addWire(Wire w) {
-        wires.add(w);
+        if (!wires.contains(w))
+            wires.add(w);
     }
 
     public void removeWire(Wire w) {

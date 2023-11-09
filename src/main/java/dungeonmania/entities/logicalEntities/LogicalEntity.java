@@ -21,7 +21,7 @@ public class LogicalEntity extends Entity {
     public boolean checkLogic() {
         switch (getLogic()) {
         case "and":
-            System.out.println("print\n\nr");
+            System.out.println("CHECK LOGIC");
             return wires.stream().allMatch(wire -> wire.isActive());
         case "or":
             return wires.stream().anyMatch(wire -> wire.isActive());
@@ -35,7 +35,8 @@ public class LogicalEntity extends Entity {
     }
 
     public void addWire(Wire w) {
-        wires.add(w);
+        if (!wires.contains(w))
+            wires.add(w);
     }
 
     public void removeWire(Wire w) {
@@ -52,5 +53,13 @@ public class LogicalEntity extends Entity {
 
     public void update() {
         return;
+    }
+
+    public List<Position> getWires() {
+        List<Position> list = new ArrayList<>();
+        for (Wire w : wires) {
+            list.add(w.getPosition());
+        }
+        return list;
     }
 }
