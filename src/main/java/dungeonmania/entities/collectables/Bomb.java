@@ -39,12 +39,22 @@ public class Bomb extends CollectableEntity {
         this.subs.add(s);
     }
 
-    public void subscribeWire(Wire w) {
-        this.wires.add(w);
+    public void addWire(Wire w) {
+        wires.add(w);
+    }
+
+    public void removeWire(Wire w) {
+        wires.remove(w);
     }
 
     public void notify(GameMap map) {
         explode(map);
+    }
+
+    public void notifyLogic(GameMap map) {
+        if (checkLogic()) {
+            explode(map);
+        }
     }
 
     @Override

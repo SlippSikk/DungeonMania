@@ -28,6 +28,14 @@ public class Switch extends Entity implements OnMovedAway {
         }
     }
 
+    public void addWire(Wire w) {
+        wires.add(w);
+    }
+
+    public void removeWire(Wire w) {
+        wires.remove(w);
+    }
+
     public void activateWires(GameMap map) {
         if (activated) {
             wires.stream().forEach(w -> w.notify(map));

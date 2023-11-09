@@ -12,10 +12,12 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.Portal;
 import dungeonmania.entities.Switch;
+import dungeonmania.entities.Wire;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.collectables.potions.Potion;
 import dungeonmania.entities.enemies.Enemy;
 import dungeonmania.entities.enemies.ZombieToastSpawner;
+import dungeonmania.entities.logicalEntities.LogicalEntity;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
 
@@ -30,13 +32,57 @@ public class GameMap {
      * 2. register all movables
      * 3. register all spawners
      * 4. register bombs and switches
-     * 5. more...
+     * 5. register switches and wires
+     * 6. register wires and logical bombs
+     * 7. register wires and logical entities
      */
     public void init() {
         initPairPortals();
         initRegisterMovables();
         initRegisterSpawners();
         initRegisterBombsAndSwitches();
+        initRegisterSwitchesAndWires();
+        initRegisterWiresAndLogicalBombs();
+        initRegisterWiresAndLogicalEntities();
+    }
+
+    private void initRegisterWiresAndLogicalEntities() {
+        List<LogicalEntity> logicalEntities = getEntities(LogicalEntity.class);
+        List<Wire> wires = getEntities(Wire.class);
+        for (LogicalEntity le : logicalEntities) {
+            for (Wire w : wires) {
+                if (Position.isAdjacent(le.getPosition(), w.getPosition())) {
+                    le.addWire(w);
+                    w.addLogicalEntity(le);
+                }
+            }
+        }
+    }
+
+    private void initRegisterWiresAndLogicalBombs() {
+        List<Bomb> logicalBombs = getEntities(Bomb.class);
+        List<Wire> wires = getEntities(Wire.class);
+        for (Bomb b : logicalBombs) {
+            for (Wire w : wires) {
+                if (Position.isAdjacent(b.getPosition(), w.getPosition())) {
+                    b.addWire(w);
+                    w.addLogicalBomb(b);
+                }
+            }
+        }
+    }
+
+    private void initRegisterSwitchesAndWires() {
+        List<Wire> wires = getEntities(Wire.class);
+        List<Switch> switches = getEntities(Switch.class);
+        for (Wire w : wires) {
+            for (Switch s : switches) {
+                if (Position.isAdjacent(w.getPosition(), s.getPosition())) {
+                    w.addSwitch(s);
+                    s.addWire(w);
+                }
+            }
+        }
     }
 
     private void initRegisterBombsAndSwitches() {
@@ -113,25 +159,6 @@ public class GameMap {
             callback.run();
         });
     }
-
-    // ATTEMPT TO IMPLEMENT METHOD onMovedAway AS AN INTERFACE
-    //
-    // private void triggerMovingAwayEvent(Entity entity) {
-    //     List<Runnable> callbacks = new ArrayList<>();
-    //     getEntities(entity.getPosition()).forEach(e -> {
-    //         if (e != entity)
-    //             callbacks.add(() -> movedAway(this, entity));
-    //     });
-    //     callbacks.forEach(callback -> {
-    //         callback.run();
-    //     });
-    // }
-
-    // private void movedAway(GameMap map, Entity entity) {
-    //     if (entity instanceof Switch) {
-    //         ((Switch) entity).onMovedAway(map, entity);
-    //     }
-    // }
 
     private void triggerOverlapEvent(Entity entity) {
         List<Runnable> overlapCallbacks = new ArrayList<>();

@@ -12,6 +12,7 @@ import dungeonmania.util.Position;
 public class Wire extends Entity {
     private boolean isActive;
 
+    private List<Switch> switches = new ArrayList<>();
     private List<Wire> wires = new ArrayList<>();
     private List<LogicalEntity> logicalEntities = new ArrayList<>();
     private List<Bomb> logicalBombs = new ArrayList<>();
@@ -19,9 +20,6 @@ public class Wire extends Entity {
     public Wire(Position position, boolean isActive) {
         super(position);
         this.isActive = isActive;
-
-        // List<Position> adjPosList = getPosition().getCardinallyAdjacentPositions();
-        //     for (Position p : adjPosList)
 
         System.out.println("Wires: " + wires);
         System.out.println("Logical Entities: " + logicalEntities);
@@ -45,8 +43,11 @@ public class Wire extends Entity {
                     if (!wires.contains(w)) {
                         addWire(w);
                     }
-                    w.notify(map);
                 }
+            }
+            for (Wire w : wires) {
+                w.setActive(true);
+                w.notify(map);
             }
         });
 
@@ -63,6 +64,14 @@ public class Wire extends Entity {
         });
     }
 
+    public void addSwitch(Switch s) {
+        switches.add(s);
+    }
+
+    public void removeSwitch(Switch s) {
+        switches.remove(s);
+    }
+
     public void addWire(Wire w) {
         wires.add(w);
     }
@@ -71,12 +80,12 @@ public class Wire extends Entity {
         wires.remove(w);
     }
 
-    public void addLogicalEntity(LogicalEntity logicalEntity) {
-        logicalEntities.add(logicalEntity);
+    public void addLogicalEntity(LogicalEntity le) {
+        logicalEntities.add(le);
     }
 
-    public void removeLogicalEntity(LogicalEntity logicalEntity) {
-        logicalEntities.remove(logicalEntity);
+    public void removeLogicalEntity(LogicalEntity le) {
+        logicalEntities.remove(le);
     }
 
     public void addLogicalBomb(Bomb b) {
@@ -89,5 +98,12 @@ public class Wire extends Entity {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+        if (isActive) {
+            notify();
+        }
     }
 }

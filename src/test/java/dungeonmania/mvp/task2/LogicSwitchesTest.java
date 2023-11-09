@@ -31,6 +31,11 @@ public class LogicSwitchesTest {
         return TestUtils.getEntitiesStream(res, "light_bulb_on").anyMatch(it -> it.getPosition().equals(pos));
     }
 
+    private boolean wireAt(DungeonResponse res, int x, int y) {
+        Position pos = new Position(x, y);
+        return TestUtils.getEntitiesStream(res, "wire").anyMatch(it -> it.getPosition().equals(pos));
+    }
+
     private boolean switchDoorClosedAt(DungeonResponse res, int x, int y) {
         Position pos = new Position(x, y);
         return TestUtils.getEntitiesStream(res, "switch_door").anyMatch(it -> it.getPosition().equals(pos));
@@ -334,6 +339,64 @@ public class LogicSwitchesTest {
     public void logicBomb() {
         DungeonManiaController dmc = new DungeonManiaController();
         DungeonResponse res = dmc.newGame("d_logicSwitchesTest_bomb", "c_logicSwitchesTest_bomb");
+
+        res = dmc.tick(Direction.RIGHT);
+        assertTrue(wireAt(res, 7, 1));
+        assertTrue(wireAt(res, 6, 2));
+        assertFalse(wireAt(res, 3, 0));
+        assertFalse(wireAt(res, 3, 1));
+        assertFalse(wireAt(res, 4, 1));
+        assertFalse(wireAt(res, 5, 1));
+
+        res = dmc.tick(Direction.DOWN);
+        assertFalse(wireAt(res, 0, 4));
+        assertFalse(wireAt(res, 1, 5));
+        assertTrue(wireAt(res, 4, 4));
+        assertTrue(wireAt(res, 3, 5));
+
+        res = dmc.tick(Direction.RIGHT);
+        res = dmc.tick(Direction.RIGHT);
+        res = dmc.tick(Direction.RIGHT);
+        res = dmc.tick(Direction.RIGHT);
+        res = dmc.tick(Direction.RIGHT);
+        res = dmc.tick(Direction.DOWN);
+
+        res = dmc.tick(Direction.RIGHT);
+        assertFalse(wireAt(res, 7, 1));
+        assertFalse(wireAt(res, 6, 2));
+    }
+
+    @Test
+    @Tag("18-8")
+    @DisplayName("Test case where bomb destroys circuit")
+    public void bombDestroyCircuit() {
+        DungeonManiaController dmc = new DungeonManiaController();
+        String config = "c_logicSwitchesTest_bombDestroyCircuit";
+        DungeonResponse res = dmc.newGame("d_logicSwitchesTest_bombDestoryCircuit", config);
+
+        res = dmc.tick(Direction.RIGHT);
+        assertFalse(wireAt(res, 4, 2));
+        assertFalse(wireAt(res, 3, 3));
+        assertFalse(wireAt(res, 5, 3));
+        assertFalse(wireAt(res, 3, 4));
+        assertFalse(wireAt(res, 4, 4));
+        assertFalse(wireAt(res, 5, 4));
+
+        res = dmc.tick(Direction.DOWN);
+        assertTrue(lightBulbOffAt(res, 3, 5));
+        assertFalse(lightBulbOnAt(res, 3, 5));
+        assertTrue(wireAt(res, 6, 4));
+    }
+
+    @Test
+    @Tag("18-9")
+    @DisplayName("Test case where bomb is picked up by player and placed in circuit")
+    public void logicalBombPlacedByPLayer() {
+        DungeonManiaController dmc = new DungeonManiaController();
+        String config = "c_logicSwitchesTest_bombPlacedByPlayer";
+        DungeonResponse res = dmc.newGame("d_logicSwitchesTest_bombPlacedByPlayer", config);
+
+        res = dmc.tick(Direction.RIGHT);
     }
 
     public static void main(String[] args) {

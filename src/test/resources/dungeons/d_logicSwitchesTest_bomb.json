@@ -8,7 +8,8 @@
         {
             "x": 4,
             "y": 0,
-            "type": "bomb"
+            "type": "bomb",
+            "logic": "co_and"
         },
         {
             "x": 0,
@@ -47,12 +48,27 @@
             "logic": "and"
         },
         {
+            "x": 7,
+            "y": 1,
+            "type": "wire"
+        },
+        {
+            "x": 8,
+            "y": 1,
+            "type": "wire"
+        },
+        {
             "x": 1,
             "y": 2,
             "type": "boulder"
         },
         {
             "x": 6,
+            "y": 2,
+            "type": "wire"
+        },
+        {
+            "x": 8,
             "y": 2,
             "type": "wire"
         },
@@ -92,6 +108,16 @@
             "type": "wire"
         },
         {
+            "x": 7,
+            "y": 3,
+            "type": "boulder"
+        },
+        {
+            "x": 8,
+            "y": 3,
+            "type": "switch"
+        },
+        {
             "x": 0,
             "y": 4,
             "type": "wire"
@@ -104,12 +130,13 @@
         {
             "x": 4,
             "y": 4,
-            "type": "bomb"
+            "type": "wire"
         },
         {
             "x": 0,
             "y": 5,
-            "type": "bomb"
+            "type": "bomb",
+            "logic": "or"
         },
         {
             "x": 1,
@@ -120,6 +147,17 @@
             "x": 2,
             "y": 5,
             "type": "wire"
+        },
+        {
+            "x": 3,
+            "y": 5,
+            "type": "wire"
+        },
+        {
+            "x": 4,
+            "y": 5,
+            "type": "bomb",
+            "logic": "xor"
         },
         {
             "x": 10,

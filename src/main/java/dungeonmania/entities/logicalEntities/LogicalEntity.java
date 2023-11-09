@@ -18,10 +18,6 @@ public class LogicalEntity extends Entity {
         this.allPrevWiresUnactivated = true;
     }
 
-    public void update() {
-        return;
-    }
-
     public boolean checkLogic() {
         switch (getLogic()) {
         case "and":
@@ -38,11 +34,23 @@ public class LogicalEntity extends Entity {
         }
     }
 
+    public void addWire(Wire w) {
+        wires.add(w);
+    }
+
+    public void removeWire(Wire w) {
+        wires.remove(w);
+    }
+
     public String getLogic() {
         return logic;
     }
 
     public boolean isAllPrevWiresUnactivated() {
         return allPrevWiresUnactivated;
+    }
+
+    public void update() {
+        return;
     }
 }
