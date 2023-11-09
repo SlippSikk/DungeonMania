@@ -7,7 +7,9 @@ import java.util.Queue;
 import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
 import dungeonmania.battles.Battleable;
+import dungeonmania.entities.buildables.Sceptre;
 import dungeonmania.entities.collectables.Bomb;
+import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.potions.Potion;
 import dungeonmania.entities.enemies.Enemy;
@@ -58,7 +60,7 @@ public class Player extends Entity implements Battleable {
     }
 
     public boolean build(String entity, EntityFactory factory) {
-        InventoryItem item = inventory.checkBuildCriteria(this, true, entity.equals("shield"), factory);
+        InventoryItem item = inventory.checkBuildCriteria(this, true, entity, factory);
         if (item == null)
             return false;
         return inventory.add(item);
@@ -89,7 +91,7 @@ public class Player extends Entity implements Battleable {
     }
 
     public boolean pickUp(Entity item) {
-        if (item instanceof Treasure)
+        if (item instanceof Treasure || item instanceof SunStone)
             collectedTreasureCount++;
         return inventory.add((InventoryItem) item);
     }
@@ -165,6 +167,10 @@ public class Player extends Entity implements Battleable {
 
     public List<BattleItem> getBattleItems() {
         return getInventory().getEntities(BattleItem.class);
+    }
+
+    public Sceptre getSceptre() {
+        return getInventory().getFirst(Sceptre.class);
     }
 
     public <T extends InventoryItem> int countEntityOfType(Class<T> itemType) {
