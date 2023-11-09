@@ -1,4 +1,7 @@
-package dungeonmania.entities;
+package dungeonmania.entities.logicalEntities;
+
+import dungeonmania.entities.Entity;
+import dungeonmania.map.GameMap;
 
 // import java.util.ArrayList;
 // import java.util.List;
@@ -21,6 +24,14 @@ public class SwitchDoor extends LogicalEntity {
         } else {
             setOpen(false);
         }
+    }
+
+    @Override
+    public boolean canMoveOnto(GameMap map, Entity entity) {
+        if (open) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isOpen() {

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dungeonmania.entities.collectables.Bomb;
+import dungeonmania.entities.logicalEntities.LogicalEntity;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
@@ -18,6 +19,18 @@ public class Wire extends Entity {
     public Wire(Position position, boolean isActive) {
         super(position);
         this.isActive = isActive;
+
+        // List<Position> adjPosList = getPosition().getCardinallyAdjacentPositions();
+        //     for (Position p : adjPosList)
+
+        System.out.println("Wires: " + wires);
+        System.out.println("Logical Entities: " + logicalEntities);
+        System.out.println("Bombs: " + logicalBombs + "\n");
+    }
+
+    @Override
+    public boolean canMoveOnto(GameMap map, Entity entity) {
+        return true;
     }
 
     public void notify(GameMap map) {
@@ -29,17 +42,13 @@ public class Wire extends Entity {
                         .collect(Collectors.toList());
                 for (Entity entity : adjWires) {
                     Wire w = (Wire) entity;
+                    if (!wires.contains(w)) {
+                        addWire(w);
+                    }
                     w.notify(map);
                 }
             }
         });
-
-        for (LogicalEntity logicalEntity : logicalEntities) {
-            if (logicalEntity.checkLogic()) {
-                logicalEntity.update();
-                // manipulate logical entities where necessary
-            }
-        }
 
         logicalEntities.stream().forEach(logicalEntity -> {
             if (logicalEntity.checkLogic()) {
@@ -52,14 +61,21 @@ public class Wire extends Entity {
                 logicalBomb.notify();
             }
         });
-
     }
 
-    public void addLogicalEntityObserver(LogicalEntity logicalEntity) {
+    public void addWire(Wire w) {
+        wires.add(w);
+    }
+
+    public void removeWire(Wire w) {
+        wires.remove(w);
+    }
+
+    public void addLogicalEntity(LogicalEntity logicalEntity) {
         logicalEntities.add(logicalEntity);
     }
 
-    public void removeLogicalEntityObserver(LogicalEntity logicalEntity) {
+    public void removeLogicalEntity(LogicalEntity logicalEntity) {
         logicalEntities.remove(logicalEntity);
     }
 

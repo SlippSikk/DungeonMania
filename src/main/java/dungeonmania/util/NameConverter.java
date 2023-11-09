@@ -5,9 +5,9 @@ import java.util.Iterator;
 
 import dungeonmania.entities.Door;
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.LightBulb;
 import dungeonmania.entities.Portal;
-import dungeonmania.entities.SwitchDoor;
+import dungeonmania.entities.logicalEntities.LightBulb;
+import dungeonmania.entities.logicalEntities.SwitchDoor;
 
 public class NameConverter {
     public static String toSnakeCase(Entity entity) {

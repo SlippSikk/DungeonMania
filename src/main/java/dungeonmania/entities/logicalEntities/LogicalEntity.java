@@ -1,8 +1,10 @@
-package dungeonmania.entities;
+package dungeonmania.entities.logicalEntities;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dungeonmania.entities.Entity;
+import dungeonmania.entities.Wire;
 import dungeonmania.util.Position;
 
 public class LogicalEntity extends Entity {
@@ -23,6 +25,7 @@ public class LogicalEntity extends Entity {
     public boolean checkLogic() {
         switch (getLogic()) {
         case "and":
+            System.out.println("print\n\nr");
             return wires.stream().allMatch(wire -> wire.isActive());
         case "or":
             return wires.stream().anyMatch(wire -> wire.isActive());

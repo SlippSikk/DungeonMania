@@ -6,6 +6,8 @@ import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.collectables.*;
 import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.enemies.*;
+import dungeonmania.entities.logicalEntities.LightBulb;
+import dungeonmania.entities.logicalEntities.SwitchDoor;
 import dungeonmania.map.GameMap;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.InvisibilityPotion;
@@ -177,10 +179,9 @@ public class EntityFactory {
         case "key":
             return new Key(pos, jsonEntity.getInt("key"));
         case "light_bulb_off":
-            return new LightBulbOff(pos, jsonEntity.getString("logic"));
+            return new LightBulb(pos, jsonEntity.getString("logic"));
         case "wire":
-            boolean isActive = false;
-            return new Wire(pos, isActive);
+            return new Wire(pos, false);
         case "switch_door":
             return new SwitchDoor(pos, jsonEntity.getString("logic"));
         default:

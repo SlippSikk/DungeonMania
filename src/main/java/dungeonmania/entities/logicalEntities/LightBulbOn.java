@@ -1,4 +1,4 @@
-package dungeonmania.entities;
+package dungeonmania.entities.logicalEntities;
 
 import dungeonmania.util.Position;
 
@@ -9,6 +9,9 @@ public class LightBulbOn extends LogicalEntity {
 
     @Override
     public void update() {
-
+        if (checkLogic()) {
+            // destory this instance and replace with light bulb on
+            return;
+        }
     }
 }

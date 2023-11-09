@@ -54,12 +54,14 @@ public class LogicSwitchesTest {
         assertTrue(boulderAt(res, 2, 2));
         assertTrue(lightBulbOffAt(res, 6, 1));
         assertFalse(lightBulbOnAt(res, 6, 1));
+        TestUtils.getEntities(res, "light_bulb").forEach(entity -> assertEquals(entity.getType(), "light_bulb_off"));
 
         res = dmc.tick(Direction.RIGHT);
         assertFalse(boulderAt(res, 2, 1));
         assertTrue(boulderAt(res, 3, 1));
         assertTrue(lightBulbOffAt(res, 6, 1));
         assertFalse(lightBulbOnAt(res, 6, 1));
+        TestUtils.getEntities(res, "light_bulb").forEach(entity -> assertEquals(entity.getType(), "light_bulb_off"));
 
         // Boulders on both switches - light bulb on
         res = dmc.tick(Direction.DOWN);
@@ -67,6 +69,7 @@ public class LogicSwitchesTest {
         assertTrue(boulderAt(res, 2, 3));
         assertFalse(lightBulbOffAt(res, 6, 1));
         assertTrue(lightBulbOnAt(res, 6, 1));
+        TestUtils.getEntities(res, "light_bulb").forEach(entity -> assertEquals(entity.getType(), "light_bulb_on"));
 
         // One boulder moved off floor switch to turn light bulb off
         res = dmc.tick(Direction.DOWN);
@@ -74,6 +77,7 @@ public class LogicSwitchesTest {
         assertTrue(boulderAt(res, 2, 4));
         assertTrue(lightBulbOffAt(res, 6, 1));
         assertFalse(lightBulbOnAt(res, 6, 1));
+        TestUtils.getEntities(res, "light_bulb").forEach(entity -> assertEquals(entity.getType(), "light_bulb_off"));
     }
 
     @Test
@@ -169,6 +173,16 @@ public class LogicSwitchesTest {
         res = dmc.tick(Direction.DOWN);
         assertFalse(boulderAt(res, 2, 2));
         assertTrue(boulderAt(res, 2, 3));
+        assertFalse(lightBulbOffAt(res, 6, 1));
+        assertTrue(lightBulbOnAt(res, 6, 1));
+        assertTrue(lightBulbOffAt(res, 4, 3));
+        assertFalse(lightBulbOnAt(res, 4, 3));
+
+        // light bulb at (6, 1) switched off
+        res = dmc.tick(Direction.RIGHT);
+        res = dmc.tick(Direction.UP);
+        assertFalse(boulderAt(res, 2, 1));
+        assertTrue(boulderAt(res, 3, 1));
         assertFalse(lightBulbOffAt(res, 6, 1));
         assertTrue(lightBulbOnAt(res, 6, 1));
         assertTrue(lightBulbOffAt(res, 4, 3));
@@ -320,5 +334,39 @@ public class LogicSwitchesTest {
     public void logicBomb() {
         DungeonManiaController dmc = new DungeonManiaController();
         DungeonResponse res = dmc.newGame("d_logicSwitchesTest_bomb", "c_logicSwitchesTest_bomb");
+    }
+
+    public static void main(String[] args) {
+        DungeonManiaController dmc = new DungeonManiaController();
+        DungeonResponse res = dmc.newGame("d_logicSwitchesTest_lightBulbAnd", "c_logicSwitchesTest_lightBulbAnd");
+
+        // assertTrue(boulderAt(res, 2, 1));
+        // assertTrue(boulderAt(res, 2, 2));
+        // assertTrue(lightBulbOffAt(res, 6, 1));
+        // assertFalse(lightBulbOnAt(res, 6, 1));
+        TestUtils.getEntities(res, "light_bulb").forEach(entity -> assertEquals(entity.getType(), "light_bulb_off"));
+
+        res = dmc.tick(Direction.RIGHT);
+        // assertFalse(boulderAt(res, 2, 1));
+        // assertTrue(boulderAt(res, 3, 1));
+        // assertTrue(lightBulbOffAt(res, 6, 1));
+        // assertFalse(lightBulbOnAt(res, 6, 1));
+        TestUtils.getEntities(res, "light_bulb").forEach(entity -> assertEquals(entity.getType(), "light_bulb_off"));
+
+        // Boulders on both switches - light bulb on
+        res = dmc.tick(Direction.DOWN);
+        // assertFalse(boulderAt(res, 2, 2));
+        // assertTrue(boulderAt(res, 2, 3));
+        // assertFalse(lightBulbOffAt(res, 6, 1));
+        // assertTrue(lightBulbOnAt(res, 6, 1));
+        TestUtils.getEntities(res, "light_bulb").forEach(entity -> assertEquals(entity.getType(), "light_bulb_on"));
+
+        // One boulder moved off floor switch to turn light bulb off
+        res = dmc.tick(Direction.DOWN);
+        // assertFalse(boulderAt(res, 2, 3));
+        // assertTrue(boulderAt(res, 2, 4));
+        // assertTrue(lightBulbOffAt(res, 6, 1));
+        // assertFalse(lightBulbOnAt(res, 6, 1));
+        TestUtils.getEntities(res, "light_bulb").forEach(entity -> assertEquals(entity.getType(), "light_bulb_off"));
     }
 }

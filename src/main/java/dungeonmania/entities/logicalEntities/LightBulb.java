@@ -1,17 +1,20 @@
-package dungeonmania.entities;
+package dungeonmania.entities.logicalEntities;
 
-// import java.util.ArrayList;
-// import java.util.List;
-
+import dungeonmania.entities.Entity;
+import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
 public class LightBulb extends LogicalEntity {
     private boolean on;
-    // private List<Wire> wires = new ArrayList<>();
 
     public LightBulb(Position pos, String logic) {
         super(pos, logic);
         this.on = false;
+    }
+
+    @Override
+    public boolean canMoveOnto(GameMap map, Entity entity) {
+        return true;
     }
 
     @Override
