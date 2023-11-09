@@ -1,8 +1,9 @@
 package dungeonmania.entities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.logicalEntities.LogicalEntity;
@@ -27,35 +28,63 @@ public class Wire extends Entity {
         return true;
     }
 
-    public void notify(GameMap map) {
-        wires.stream().forEach(wire -> {
-            List<Position> adjPosList = getPosition().getCardinallyAdjacentPositions();
-            for (Position p : adjPosList) {
-                List<Entity> adjEntities = map.getEntities(p);
-                List<Entity> adjWires = adjEntities.stream().filter(e -> e instanceof Wire)
-                        .collect(Collectors.toList());
-                for (Entity entity : adjWires) {
-                    Wire w = (Wire) entity;
-                    if (!wires.contains(w)) {
-                        addWire(w);
-                    }
-                }
-            }
-            for (Wire w : wires) {
-                w.setActive(true);
-                w.notify(map);
-            }
-        });
+    public void notifyActivated(GameMap map) {
+        // check previous state of wire activation
+        // logicalEntities.stream().forEach(logicalEntity -> {
+        //     logicalEntity.checkAllWiresSameState();
+        // });
 
-        logicalEntities.stream().forEach(logicalEntity -> {
-            if (logicalEntity.checkLogic()) {
-                logicalEntity.update();
+        if (!isActive()) {
+            setActive(true);
+            wires.stream().forEach(w -> w.notifyActivated(map));
+            updateLogicalEntities(map);
+        }
+    }
+
+    public void notifyDeactivated(GameMap map) {
+        // check previous state of wire activation
+        // logicalEntities.stream().forEach(logicalEntity -> {
+        //     logicalEntity.checkAllWiresSameState();
+        // });
+
+        if (isActive()) {
+            Set<Wire> visitedWires = new HashSet<>();
+            if (!checkActiveAdjSwitch(map, visitedWires)) {
+                visitedWires.forEach(w -> w.setActive(false));
+                visitedWires.forEach(w -> w.updateLogicalEntities(map));
             }
+        }
+    }
+
+    public boolean checkActiveAdjSwitch(GameMap map, Set<Wire> visitedWires) {
+        if (visitedWires.contains(this)) {
+            return false;
+        }
+        visitedWires.add(this);
+
+        for (Switch adjSwitch : switches) {
+            if (adjSwitch.isActivated()) {
+                return true;
+            }
+        }
+
+        for (Wire adjWire : wires) {
+            if (adjWire.checkActiveAdjSwitch(map, visitedWires)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void updateLogicalEntities(GameMap map) {
+        logicalEntities.stream().forEach(logicalEntity -> {
+            logicalEntity.update();
         });
 
         logicalBombs.stream().forEach(logicalBomb -> {
             if (isActive() && logicalBomb.checkLogic()) {
-                logicalBomb.notify();
+                logicalBomb.notify(map);
             }
         });
     }
@@ -99,9 +128,6 @@ public class Wire extends Entity {
 
     public void setActive(boolean isActive) {
         this.isActive = isActive;
-        if (isActive) {
-            notify();
-        }
     }
 
     public List<Position> getWires() {

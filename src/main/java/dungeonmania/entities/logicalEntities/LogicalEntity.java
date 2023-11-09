@@ -9,29 +9,43 @@ import dungeonmania.util.Position;
 
 public class LogicalEntity extends Entity {
     private String logic;
-    private boolean allPrevWiresUnactivated;
+    private boolean allWiresSameState;
     private List<Wire> wires = new ArrayList<>();
 
     public LogicalEntity(Position pos, String logic) {
         super(pos);
         this.logic = logic;
-        this.allPrevWiresUnactivated = true;
+        this.allWiresSameState = true;
     }
 
     public boolean checkLogic() {
         switch (getLogic()) {
         case "and":
-            System.out.println("CHECK LOGIC");
             return wires.stream().allMatch(wire -> wire.isActive());
         case "or":
             return wires.stream().anyMatch(wire -> wire.isActive());
         case "xor":
             return wires.stream().filter(wire -> wire.isActive()).count() == 1;
         case "co_and":
-            return wires.stream().allMatch(wire -> wire.isActive()) && isAllPrevWiresUnactivated();
+            return wires.stream().allMatch(wire -> wire.isActive()) && isallWiresSameState();
         default:
             return false;
         }
+    }
+
+    public void checkAllWiresSameState() {
+        System.out.println(this.getPosition());
+        System.out.println(wires.stream().allMatch(w -> w.isActive()) || wires.stream().allMatch(w -> !w.isActive()));
+        System.out.println("\n");
+        setallWiresSameState(wires.stream().allMatch(w -> w.isActive()) || wires.stream().allMatch(w -> !w.isActive()));
+    }
+
+    public boolean isallWiresSameState() {
+        return allWiresSameState;
+    }
+
+    public void setallWiresSameState(boolean allWiresSameState) {
+        this.allWiresSameState = allWiresSameState;
     }
 
     public void addWire(Wire w) {
@@ -45,10 +59,6 @@ public class LogicalEntity extends Entity {
 
     public String getLogic() {
         return logic;
-    }
-
-    public boolean isAllPrevWiresUnactivated() {
-        return allPrevWiresUnactivated;
     }
 
     public void update() {

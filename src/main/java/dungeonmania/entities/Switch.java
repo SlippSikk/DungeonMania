@@ -37,12 +37,6 @@ public class Switch extends Entity implements OnMovedAway {
         wires.remove(w);
     }
 
-    public void activateWires(GameMap map) {
-        if (activated) {
-            wires.stream().forEach(w -> w.notify(map));
-        }
-    }
-
     public void unsubscribe(Bomb b) {
         bombs.remove(b);
     }
@@ -56,6 +50,8 @@ public class Switch extends Entity implements OnMovedAway {
     public void onOverlap(GameMap map, Entity entity) {
         if (entity instanceof Boulder) {
             activated = true;
+            map.checkCoAnd();
+            wires.stream().forEach(w -> w.notifyActivated(map));
             bombs.stream().forEach(b -> b.notify(map));
         }
     }
@@ -64,6 +60,8 @@ public class Switch extends Entity implements OnMovedAway {
     public void onMovedAway(GameMap map, Entity entity) {
         if (entity instanceof Boulder) {
             activated = false;
+            map.checkCoAnd();
+            wires.stream().forEach(w -> w.notifyDeactivated(map));
         }
     }
 

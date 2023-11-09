@@ -1,6 +1,16 @@
 {
     "entities": [
         {
+            "x": 3,
+            "y": 0,
+            "type": "boulder"
+        },
+        {
+            "x": 4,
+            "y": 0,
+            "type": "switch"
+        },
+        {
             "type": "player",
             "x": 1,
             "y": 1

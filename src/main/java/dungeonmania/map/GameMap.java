@@ -59,15 +59,15 @@ public class GameMap {
             }
         }
 
-        for (LogicalEntity le : logicalEntities) {
-            System.out.println("Wires " + le.getWires() + "\n");
-        }
-        for (Wire w : wires) {
-            System.out.println("Wires: " + w.getWires());
-            System.out.println("Logical Entities: " + w.getLogicalEntities());
-            System.out.println("Switches: " + w.getSwitches());
-            System.out.println("Bombs: " + w.getBombs() + "\n");
-        }
+        // for (LogicalEntity le : logicalEntities) {
+        //     System.out.println("\nWires: " + le.getWires() + "\n");
+        // }
+        // for (Wire w : wires) {
+        //     // System.out.println("Wires: " + w.getWires());
+        //     // System.out.println("Logical Entities: " + w.getLogicalEntities());
+        //     System.out.println("Switches: " + w.getSwitches());
+        //     // System.out.println("Bombs: " + w.getBombs() + "\n");
+        // }
     }
 
     private void initRegisterWiresAndLogicalBombs() {
@@ -149,6 +149,13 @@ public class GameMap {
             game.register(() -> e.spawn(game), Game.AI_MOVEMENT, e.getId());
         });
         game.register(() -> game.getEntityFactory().spawnSpider(game), Game.AI_MOVEMENT, "spawnSpiders");
+    }
+
+    public void checkCoAnd() {
+        List<LogicalEntity> logicalEntities = getEntities(LogicalEntity.class);
+        for (LogicalEntity le : logicalEntities) {
+            le.checkAllWiresSameState();
+        }
     }
 
     public void moveTo(Entity entity, Position position) {
