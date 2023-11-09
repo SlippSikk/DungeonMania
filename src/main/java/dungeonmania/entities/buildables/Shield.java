@@ -4,7 +4,6 @@ import dungeonmania.battles.BattleStatistics;
 
 public class Shield extends Buildable {
     private static final int DEFAULT_VAL = 1;
-    private int durability;
     private double defence;
 
     public Shield(int durability, double defence) {

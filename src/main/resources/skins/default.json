@@ -44,6 +44,8 @@
         "zombie_toast": "images/tileset/entities/zombie.png",
         "boulders": "images/tileset/entities/boulder_00.png",
         "enemies": "images/tileset/items/sword_silver.png",
-        "sun_stone": "images/tileset/items/sunstone.png"
+        "sun_stone": "images/tileset/items/sunstone.png",
+        "sceptre": "images/tileset/entities/sceptre.png",
+        "midnight_armour": "images/tileset/entities/midnight_armour.png"
     }
 }

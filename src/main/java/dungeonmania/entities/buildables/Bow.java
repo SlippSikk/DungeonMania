@@ -3,7 +3,6 @@ package dungeonmania.entities.buildables;
 import dungeonmania.battles.BattleStatistics;
 
 public class Bow extends Buildable {
-    private int durability;
     private static final int DEFAULT_MAG = 2;
     private static final int DEFAULT_VAL = 1;
 

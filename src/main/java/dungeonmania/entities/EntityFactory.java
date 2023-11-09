@@ -2,10 +2,12 @@ package dungeonmania.entities;
 
 import dungeonmania.Game;
 import dungeonmania.entities.buildables.Bow;
+import dungeonmania.entities.buildables.MidnightArmour;
 import dungeonmania.entities.buildables.Sceptre;
 import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.collectables.*;
 import dungeonmania.entities.enemies.*;
+import dungeonmania.entities.inventory.InventoryItem;
 import dungeonmania.map.GameMap;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.InvisibilityPotion;
@@ -125,6 +127,12 @@ public class EntityFactory {
     public Sceptre buildSceptre() {
         int mindControlDuration = config.optInt("mind_control_duration");
         return new Sceptre(mindControlDuration);
+    }
+
+    public InventoryItem buildMidnightArmour() {
+        int armourAttack = config.optInt("midnight_armour_attack");
+        int armourDefence = config.optInt("midnight_armour_defence");
+        return new MidnightArmour(armourAttack, armourDefence);
     }
 
     private Entity constructEntity(JSONObject jsonEntity, JSONObject config) {

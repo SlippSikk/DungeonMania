@@ -2,7 +2,6 @@ package dungeonmania.entities.buildables;
 
 import dungeonmania.Game;
 import dungeonmania.battles.BattleStatistics;
-import dungeonmania.util.Position;
 
 public class MidnightArmour extends Buildable {
     private static int durability = Integer.MAX_VALUE;
@@ -11,8 +10,8 @@ public class MidnightArmour extends Buildable {
     private int attack;
     private int defence;
 
-    public MidnightArmour(Position position, int attack, int defence) {
-        super(position, durability);
+    public MidnightArmour(int attack, int defence) {
+        super(null, durability);
         this.attack = attack;
         this.defence = defence;
     }
