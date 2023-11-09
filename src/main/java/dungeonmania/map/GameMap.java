@@ -154,7 +154,7 @@ public class GameMap {
     public void checkCoAnd() {
         List<LogicalEntity> logicalEntities = getEntities(LogicalEntity.class);
         for (LogicalEntity le : logicalEntities) {
-            le.checkAllWiresSameState();
+            le.checkAllAdjWiresSameState();
         }
     }
 

@@ -9,13 +9,13 @@ import dungeonmania.util.Position;
 
 public class LogicalEntity extends Entity {
     private String logic;
-    private boolean allWiresSameState;
+    private boolean allAdjWiresSameState;
     private List<Wire> wires = new ArrayList<>();
 
     public LogicalEntity(Position pos, String logic) {
         super(pos);
         this.logic = logic;
-        this.allWiresSameState = true;
+        this.allAdjWiresSameState = true;
     }
 
     public boolean checkLogic() {
@@ -27,25 +27,23 @@ public class LogicalEntity extends Entity {
         case "xor":
             return wires.stream().filter(wire -> wire.isActive()).count() == 1;
         case "co_and":
-            return wires.stream().allMatch(wire -> wire.isActive()) && isallWiresSameState();
+            return wires.stream().allMatch(wire -> wire.isActive()) && isallAdjWiresSameState();
         default:
             return false;
         }
     }
 
-    public void checkAllWiresSameState() {
-        System.out.println(this.getPosition());
-        System.out.println(wires.stream().allMatch(w -> w.isActive()) || wires.stream().allMatch(w -> !w.isActive()));
-        System.out.println("\n");
-        setallWiresSameState(wires.stream().allMatch(w -> w.isActive()) || wires.stream().allMatch(w -> !w.isActive()));
+    public void checkAllAdjWiresSameState() {
+        setallAdjWiresSameState(
+                wires.stream().allMatch(w -> w.isActive()) || wires.stream().allMatch(w -> !w.isActive()));
     }
 
-    public boolean isallWiresSameState() {
-        return allWiresSameState;
+    public boolean isallAdjWiresSameState() {
+        return allAdjWiresSameState;
     }
 
-    public void setallWiresSameState(boolean allWiresSameState) {
-        this.allWiresSameState = allWiresSameState;
+    public void setallAdjWiresSameState(boolean allAdjWiresSameState) {
+        this.allAdjWiresSameState = allAdjWiresSameState;
     }
 
     public void addWire(Wire w) {

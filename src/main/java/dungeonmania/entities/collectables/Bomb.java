@@ -22,7 +22,7 @@ public class Bomb extends CollectableEntity {
     private int radius;
 
     private String logic;
-    private boolean allPrevWiresUnactivated;
+    private boolean allAdjWiresSameState;
 
     private List<Switch> subs = new ArrayList<>();
     private List<Wire> wires = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Bomb extends CollectableEntity {
         state = State.SPAWNED;
         this.radius = radius;
         this.logic = logic;
-        this.allPrevWiresUnactivated = true;
+        this.allAdjWiresSameState = true;
     }
 
     public void subscribe(Switch s) {
@@ -107,10 +107,23 @@ public class Bomb extends CollectableEntity {
         case "xor":
             return wires.stream().filter(wire -> wire.isActive()).count() == 1;
         case "co_and":
-            return wires.stream().allMatch(wire -> wire.isActive()) && isAllPrevWiresUnactivated();
+            return wires.stream().allMatch(wire -> wire.isActive()) && isallAdjWiresSameState();
         default:
             return false;
         }
+    }
+
+    public void checkAllWiresSameState() {
+        boolean bool = wires.stream().allMatch(w -> w.isActive()) || wires.stream().allMatch(w -> !w.isActive());
+        setallAdjWiresSameState(bool);
+    }
+
+    public boolean isallAdjWiresSameState() {
+        return allAdjWiresSameState;
+    }
+
+    public void setallAdjWiresSameState(boolean allAdjWiresSameState) {
+        this.allAdjWiresSameState = allAdjWiresSameState;
     }
 
     public State getState() {
@@ -119,9 +132,5 @@ public class Bomb extends CollectableEntity {
 
     public String getLogic() {
         return logic;
-    }
-
-    public boolean isAllPrevWiresUnactivated() {
-        return allPrevWiresUnactivated;
     }
 }
