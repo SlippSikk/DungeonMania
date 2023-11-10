@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.DungeonManiaController;
-import dungeonmania.exceptions.InvalidActionException;
+// import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.mvp.TestUtils;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
@@ -462,6 +462,8 @@ public class LogicSwitchesTest {
 
     //     // bomb explodes
     //     res = dmc.tick(Direction.UP);
+    //     Position pos = new Position(4, 3);
+    //     assertEquals(pos, TestUtils.getEntities(res, "player").get(0).getPosition());
     //     res = dmc.tick(TestUtils.getInventory(res, "bomb").get(0).getId());
     //     assertFalse(wireAt(res, 4, 2));
     //     assertFalse(wireAt(res, 3, 3));

@@ -102,6 +102,13 @@ public class Wire extends Entity {
             wires.add(w);
     }
 
+    public void addLogicalBomb(Bomb b, GameMap map) {
+        logicalBombs.add(b);
+        if (isActive() && b.getLogic() != "") {
+            logicalBombs.stream().forEach(bomb -> bomb.notifyLogic(map));
+        }
+    }
+
     public void removeWire(Wire w) {
         wires.remove(w);
     }

@@ -68,10 +68,16 @@ public class GameMap {
         //     System.out.println("Switches: " + w.getSwitches());
         //     // System.out.println("Bombs: " + w.getBombs() + "\n");
         // }
+        List<Bomb> logicalBombs = getEntities(Bomb.class).stream().filter(b -> b.getLogic() != "")
+                .collect(Collectors.toList());
+        for (Bomb b : logicalBombs) {
+            System.out.println();
+        }
     }
 
     private void initRegisterWiresAndLogicalBombs() {
-        List<Bomb> logicalBombs = getEntities(Bomb.class);
+        List<Bomb> logicalBombs = getEntities(Bomb.class).stream().filter(b -> b.getLogic() != "")
+                .collect(Collectors.toList());
         List<Wire> wires = getEntities(Wire.class);
         for (Bomb b : logicalBombs) {
             for (Wire w : wires) {

@@ -60,13 +60,14 @@ public class Bomb extends CollectableEntity {
 
     @Override
     public void onOverlap(GameMap map, Entity entity) {
-        if (state != State.SPAWNED)
+        if (state != State.SPAWNED && state != State.PLACED)
             return;
 
         if (entity instanceof Player) {
             boolean wasPickedUp = onPickup(map, (Player) entity);
             if (wasPickedUp) {
                 subs.forEach(s -> s.unsubscribe(this));
+                wires.forEach(w -> w.removeLogicalBomb(this));
                 state = State.INVENTORY;
             }
         }
@@ -82,6 +83,8 @@ public class Bomb extends CollectableEntity {
                     .collect(Collectors.toList());
             entities.stream().map(Switch.class::cast).forEach(s -> s.subscribe(this, map));
             entities.stream().map(Switch.class::cast).forEach(s -> this.subscribe(s));
+            entities.stream().map(Wire.class::cast).forEach(w -> w.addLogicalBomb(this, map));
+            entities.stream().map(Wire.class::cast).forEach(w -> this.addWire(w));
         });
     }
 
