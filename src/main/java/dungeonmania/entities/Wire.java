@@ -130,31 +130,31 @@ public class Wire extends Entity {
         this.isActive = isActive;
     }
 
-    public List<Position> getWires() {
-        List<Position> list = new ArrayList<>();
-        for (Wire w : wires) {
-            if (w != this) {
-                list.add(w.getPosition());
-            }
-        }
-        return list;
-    }
+    // public List<Position> getWires() {
+    //     List<Position> list = new ArrayList<>();
+    //     for (Wire w : wires) {
+    //         if (w != this) {
+    //             list.add(w.getPosition());
+    //         }
+    //     }
+    //     return list;
+    // }
 
-    public List<Position> getSwitches() {
-        List<Position> list = new ArrayList<>();
-        for (Switch w : switches) {
-            list.add(w.getPosition());
-        }
-        return list;
-    }
+    // public List<Position> getSwitches() {
+    //     List<Position> list = new ArrayList<>();
+    //     for (Switch w : switches) {
+    //         list.add(w.getPosition());
+    //     }
+    //     return list;
+    // }
 
-    public List<Position> getLogicalEntities() {
-        List<Position> list = new ArrayList<>();
-        for (LogicalEntity w : logicalEntities) {
-            list.add(w.getPosition());
-        }
-        return list;
-    }
+    // public List<Position> getLogicalEntities() {
+    //     List<Position> list = new ArrayList<>();
+    //     for (LogicalEntity w : logicalEntities) {
+    //         list.add(w.getPosition());
+    //     }
+    //     return list;
+    // }
 
     public List<Position> getBombs() {
         List<Position> list = new ArrayList<>();

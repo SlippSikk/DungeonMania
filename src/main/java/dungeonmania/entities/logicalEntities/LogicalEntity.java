@@ -62,12 +62,4 @@ public class LogicalEntity extends Entity {
     public void update() {
         return;
     }
-
-    public List<Position> getWires() {
-        List<Position> list = new ArrayList<>();
-        for (Wire w : wires) {
-            list.add(w.getPosition());
-        }
-        return list;
-    }
 }

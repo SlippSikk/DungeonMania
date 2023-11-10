@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import dungeonmania.DungeonManiaController;
+import dungeonmania.exceptions.InvalidActionException;
 import dungeonmania.mvp.TestUtils;
 import dungeonmania.response.models.DungeonResponse;
 import dungeonmania.util.Direction;
@@ -407,12 +408,66 @@ public class LogicSwitchesTest {
     // @Test
     // @Tag("18-9")
     // @DisplayName("Test case where bomb is picked up by player and placed in circuit")
-    // public void logicalBombPlacedByPLayer() {
+    // public void logicalBombPlacedByPLayer() throws IllegalArgumentException, InvalidActionException {
     //     DungeonManiaController dmc = new DungeonManiaController();
     //     String config = "c_logicSwitchesTest_bombPlacedByPlayer";
     //     DungeonResponse res = dmc.newGame("d_logicSwitchesTest_bombPlacedByPlayer", config);
 
     //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.DOWN);
+
+    //     res = dmc.tick(Direction.UP);
+    //     res = dmc.tick(Direction.LEFT);
+
+    //     // pick up bomb here
+    //     res = dmc.tick(Direction.UP);
+    //     assertEquals(1, TestUtils.getInventory(res, "bomb").size());
+
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.RIGHT);
+
+    //     // bomb placed does not explode
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(TestUtils.getInventory(res, "bomb").get(0).getId());
+    //     assertTrue(wireAt(res, 4, 1));
+    //     assertEquals(2, TestUtils.getEntities(res, "switch").size());
+    //     assertEquals(3, TestUtils.getEntities(res, "boulder").size());
+    //     assertEquals(1, TestUtils.getEntities(res, "wall").size());
+    //     assertEquals(1, TestUtils.getEntities(res, "treasure").size());
+
+    //     res = dmc.tick(Direction.LEFT);
+    //     res = dmc.tick(Direction.LEFT);
+    //     res = dmc.tick(Direction.LEFT);
+    //     res = dmc.tick(Direction.DOWN);
+    //     res = dmc.tick(Direction.DOWN);
+    //     assertEquals(1, TestUtils.getInventory(res, "bomb").size());
+
+    //     res = dmc.tick(Direction.DOWN);
+    //     res = dmc.tick(Direction.DOWN);
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.RIGHT);
+
+    //     // bomb does not explode
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(TestUtils.getInventory(res, "bomb").get(0).getId());
+
+    //     res = dmc.tick(Direction.RIGHT);
+
+    //     // pick up bomb again
+    //     res = dmc.tick(Direction.LEFT);
+    //     assertEquals(1, TestUtils.getInventory(res, "bomb").size());
+
+    //     res = dmc.tick(Direction.LEFT);
+
+    //     // bomb explodes
+    //     res = dmc.tick(Direction.UP);
+    //     res = dmc.tick(TestUtils.getInventory(res, "bomb").get(0).getId());
+    //     assertFalse(wireAt(res, 4, 2));
+    //     assertFalse(wireAt(res, 3, 3));
+    //     assertFalse(wireAt(res, 3, 4));
+    //     assertFalse(wireAt(res, 4, 4));
+    //     assertEquals(0, TestUtils.getEntities(res, "treasure").size());
     // }
 
     public static void main(String[] args) {
