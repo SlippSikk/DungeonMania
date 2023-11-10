@@ -33,16 +33,12 @@ public class Switch extends Conductor implements OnMovedAway {
     }
 
     @Override
-    public boolean canMoveOnto(GameMap map, Entity entity) {
-        return true;
-    }
-
-    @Override
     public void onOverlap(GameMap map, Entity entity) {
         if (entity instanceof Boulder) {
             setActivated(true);
             map.checkCoAnd();
             getWires().stream().forEach(w -> w.notifyActivated(map));
+            getLogicalEntities().stream().forEach(le -> le.update());
             bombs.stream().forEach(b -> b.notify(map));
         }
     }
@@ -53,6 +49,7 @@ public class Switch extends Conductor implements OnMovedAway {
             setActivated(false);
             map.checkCoAnd();
             getWires().stream().forEach(w -> w.notifyDeactivated(map));
+            getLogicalEntities().stream().forEach(le -> le.update());
         }
     }
 }

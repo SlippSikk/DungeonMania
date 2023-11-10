@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import dungeonmania.entities.Entity;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
@@ -15,11 +14,6 @@ public class Wire extends Conductor {
 
     public Wire(Position position) {
         super(position);
-    }
-
-    @Override
-    public boolean canMoveOnto(GameMap map, Entity entity) {
-        return true;
     }
 
     public void notifyActivated(GameMap map) {
@@ -67,13 +61,13 @@ public class Wire extends Conductor {
         });
 
         getLogicalBombs().stream().forEach(logicalBomb -> {
-            System.out.println(isActivated());
-            System.out.println(logicalBomb.checkLogic());
+            // System.out.println(isActivated());
+            // System.out.println(logicalBomb.checkLogic());
             if (isActivated() && logicalBomb.checkLogic()) {
                 logicalBomb.notify(map);
             }
         });
-        System.out.println("\n");
+        // System.out.println("\n");
     }
 
     public void addSwitch(Switch s) {
@@ -82,11 +76,6 @@ public class Wire extends Conductor {
 
     public void removeSwitch(Switch s) {
         switches.remove(s);
-    }
-
-    public void addWire(Wire w) {
-        if (!getWires().contains(w))
-            getWires().add(w);
     }
 
     public void addLogicalBomb(Bomb b, GameMap map) {

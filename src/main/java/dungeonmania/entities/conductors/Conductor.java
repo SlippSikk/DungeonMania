@@ -6,6 +6,7 @@ import java.util.List;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.logicalEntities.LogicalEntity;
+import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
 public class Conductor extends Entity {
@@ -17,6 +18,11 @@ public class Conductor extends Entity {
     public Conductor(Position position) {
         super(position);
         this.activated = false;
+    }
+
+    @Override
+    public boolean canMoveOnto(GameMap map, Entity entity) {
+        return true;
     }
 
     public void addWire(Wire w) {

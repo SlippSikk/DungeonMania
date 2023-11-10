@@ -35,6 +35,7 @@ public class GameMap {
      * 5. register switches and wires
      * 6. register wires and logical bombs
      * 7. register wires and logical entities
+     * 8. register switches and logical entities
      */
     public void init() {
         initPairPortals();
@@ -45,6 +46,20 @@ public class GameMap {
         initRegisterSwitchesAndWires();
         initRegisterWiresAndLogicalBombs();
         initRegisterWiresAndLogicalEntities();
+        initRegisterSwitchesAndLogicalEntities();
+    }
+
+    private void initRegisterSwitchesAndLogicalEntities() {
+        List<LogicalEntity> logicalEntities = getEntities(LogicalEntity.class);
+        List<Switch> switches = getEntities(Switch.class);
+        for (LogicalEntity le : logicalEntities) {
+            for (Switch s : switches) {
+                if (Position.isAdjacent(le.getPosition(), s.getPosition())) {
+                    le.addSwitch(s);
+                    s.addLogicalEntity(le);
+                }
+            }
+        }
     }
 
     private void initRegisterWiresAndLogicalEntities() {

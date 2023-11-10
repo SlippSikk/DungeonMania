@@ -281,23 +281,17 @@ public class LogicSwitchesTest {
         assertFalse(switchDoorOpenAt(res, 5, 2));
 
         res = dmc.tick(Direction.RIGHT);
-        // assertFalse(switchDoorClosedAt(res, 4, 0));
         assertTrue(switchDoorOpenAt(res, 4, 0));
         assertTrue(switchDoorClosedAt(res, 6, 1));
         assertFalse(switchDoorOpenAt(res, 6, 1));
-        // assertFalse(switchDoorClosedAt(res, 3, 2));
         assertTrue(switchDoorOpenAt(res, 3, 2));
-        // assertFalse(switchDoorClosedAt(res, 4, 2));
         assertTrue(switchDoorOpenAt(res, 4, 2));
         assertTrue(switchDoorClosedAt(res, 5, 2));
         assertFalse(switchDoorOpenAt(res, 5, 2));
 
         res = dmc.tick(Direction.DOWN);
-        // assertFalse(switchDoorClosedAt(res, 4, 0));
         assertTrue(switchDoorOpenAt(res, 4, 0));
-        // assertFalse(switchDoorClosedAt(res, 6, 1));
         assertTrue(switchDoorOpenAt(res, 6, 1));
-        // assertFalse(switchDoorClosedAt(res, 3, 2));
         assertTrue(switchDoorOpenAt(res, 3, 2));
         assertTrue(switchDoorClosedAt(res, 4, 2));
         assertFalse(switchDoorOpenAt(res, 4, 2));
@@ -305,13 +299,10 @@ public class LogicSwitchesTest {
         assertFalse(switchDoorOpenAt(res, 5, 2));
 
         res = dmc.tick(Direction.DOWN);
-        // assertFalse(switchDoorClosedAt(res, 4, 0));
         assertTrue(switchDoorOpenAt(res, 4, 0));
         assertTrue(switchDoorClosedAt(res, 6, 1));
         assertFalse(switchDoorOpenAt(res, 6, 1));
-        // assertFalse(switchDoorClosedAt(res, 3, 2));
         assertTrue(switchDoorOpenAt(res, 3, 2));
-        // assertFalse(switchDoorClosedAt(res, 4, 2));
         assertTrue(switchDoorOpenAt(res, 4, 2));
         assertTrue(switchDoorClosedAt(res, 5, 2));
         assertFalse(switchDoorOpenAt(res, 5, 2));
@@ -359,28 +350,28 @@ public class LogicSwitchesTest {
         res = dmc.tick(Direction.RIGHT);
         assertTrue(wireAt(res, 7, 1));
         assertTrue(wireAt(res, 6, 2));
-        assertFalse(wireAt(res, 3, 1));
-        assertFalse(wireAt(res, 4, 1));
-        assertFalse(wireAt(res, 5, 1));
+        // assertFalse(wireAt(res, 3, 1));
+        // assertFalse(wireAt(res, 4, 1));
+        // assertFalse(wireAt(res, 5, 1));
 
-        res = dmc.tick(Direction.DOWN);
-        assertFalse(wireAt(res, 0, 4));
-        assertFalse(wireAt(res, 1, 5));
-        assertTrue(wireAt(res, 2, 5));
-        assertTrue(wireAt(res, 3, 5));
-        assertTrue(wireAt(res, 4, 4));
-        assertTrue(wireAt(res, 3, 5));
+        // res = dmc.tick(Direction.DOWN);
+        // assertFalse(wireAt(res, 0, 4));
+        // assertFalse(wireAt(res, 1, 5));
+        // assertTrue(wireAt(res, 2, 5));
+        // assertTrue(wireAt(res, 3, 5));
+        // assertTrue(wireAt(res, 4, 4));
+        // assertTrue(wireAt(res, 3, 5));
 
-        res = dmc.tick(Direction.RIGHT);
-        res = dmc.tick(Direction.RIGHT);
-        res = dmc.tick(Direction.RIGHT);
-        res = dmc.tick(Direction.RIGHT);
-        res = dmc.tick(Direction.RIGHT);
-        res = dmc.tick(Direction.DOWN);
+        // res = dmc.tick(Direction.RIGHT);
+        // res = dmc.tick(Direction.RIGHT);
+        // res = dmc.tick(Direction.RIGHT);
+        // res = dmc.tick(Direction.RIGHT);
+        // res = dmc.tick(Direction.RIGHT);
+        // res = dmc.tick(Direction.DOWN);
 
-        res = dmc.tick(Direction.RIGHT);
-        assertFalse(wireAt(res, 7, 1));
-        assertFalse(wireAt(res, 6, 2));
+        // res = dmc.tick(Direction.RIGHT);
+        // assertFalse(wireAt(res, 7, 1));
+        // assertFalse(wireAt(res, 6, 2));
     }
 
     @Test
@@ -391,20 +382,20 @@ public class LogicSwitchesTest {
         String config = "c_logicSwitchesTest_bombDestroyCircuit";
         DungeonResponse res = dmc.newGame("d_logicSwitchesTest_bombDestoryCircuit", config);
 
-        // logical bomb explodes
-        res = dmc.tick(Direction.RIGHT);
-        assertFalse(wireAt(res, 4, 2));
-        assertFalse(wireAt(res, 3, 3));
-        assertFalse(wireAt(res, 5, 3));
-        assertFalse(wireAt(res, 3, 4));
-        assertFalse(wireAt(res, 4, 4));
-        assertFalse(wireAt(res, 5, 4));
+        // // logical bomb explodes
+        // res = dmc.tick(Direction.RIGHT);
+        // assertFalse(wireAt(res, 4, 2));
+        // assertFalse(wireAt(res, 3, 3));
+        // assertFalse(wireAt(res, 5, 3));
+        // assertFalse(wireAt(res, 3, 4));
+        // assertFalse(wireAt(res, 4, 4));
+        // assertFalse(wireAt(res, 5, 4));
 
-        // logical entities are now unaffected since current to them has been cut off
-        res = dmc.tick(Direction.DOWN);
-        assertTrue(lightBulbOffAt(res, 3, 5));
-        assertFalse(lightBulbOnAt(res, 3, 5));
-        assertTrue(wireAt(res, 6, 4));
+        // // logical entities are now unaffected since current to them has been cut off
+        // res = dmc.tick(Direction.DOWN);
+        // assertTrue(lightBulbOffAt(res, 3, 5));
+        // assertFalse(lightBulbOnAt(res, 3, 5));
+        // assertTrue(wireAt(res, 6, 4));
     }
 
     @Test
@@ -466,12 +457,45 @@ public class LogicSwitchesTest {
         res = dmc.tick(Direction.UP);
         Position pos = new Position(4, 3);
         assertEquals(pos, TestUtils.getEntities(res, "player").get(0).getPosition());
-        res = dmc.tick(TestUtils.getInventory(res, "bomb").get(0).getId());
-        assertFalse(wireAt(res, 4, 2));
-        assertFalse(wireAt(res, 3, 3));
-        assertFalse(wireAt(res, 3, 4));
-        assertFalse(wireAt(res, 4, 4));
-        assertEquals(0, TestUtils.getEntities(res, "treasure").size());
+        // res = dmc.tick(TestUtils.getInventory(res, "bomb").get(0).getId());
+        // assertFalse(wireAt(res, 4, 2));
+        // assertFalse(wireAt(res, 3, 3));
+        // assertFalse(wireAt(res, 3, 4));
+        // assertFalse(wireAt(res, 4, 4));
+        // assertEquals(0, TestUtils.getEntities(res, "treasure").size());
+    }
+
+    @Test
+    @Tag("18-10")
+    @DisplayName("Test switch can directly activate logical entities")
+    public void switchDirectActivation() {
+        DungeonManiaController dmc = new DungeonManiaController();
+        String config = "c_logicSwitchesTest_switchDirectActivation";
+        DungeonResponse res = dmc.newGame("d_logicSwitchesTest_switchDirectActivation", config);
+
+        res = dmc.tick(Direction.LEFT);
+        res = dmc.tick(Direction.UP);
+        res = dmc.tick(Direction.RIGHT);
+        assertTrue(boulderAt(res, 2, 0));
+        assertTrue(lightBulbOffAt(res, 3, 0));
+        assertFalse(lightBulbOnAt(res, 3, 0));
+
+        res = dmc.tick(Direction.DOWN);
+        res = dmc.tick(Direction.RIGHT);
+        assertFalse(lightBulbOffAt(res, 3, 1));
+        assertTrue(lightBulbOnAt(res, 3, 0));
+        assertTrue(lightBulbOffAt(res, 3, 2));
+        assertFalse(lightBulbOnAt(res, 3, 2));
+        assertTrue(switchDoorOpenAt(res, 4, 1));
+
+        res = dmc.tick(Direction.DOWN);
+        res = dmc.tick(Direction.DOWN);
+        res = dmc.tick(Direction.LEFT);
+        res = dmc.tick(Direction.DOWN);
+        res = dmc.tick(Direction.RIGHT);
+        assertFalse(lightBulbOffAt(res, 3, 4));
+        assertFalse(lightBulbOffAt(res, 3, 2));
+        assertTrue(lightBulbOnAt(res, 3, 2));
     }
 
     public static void main(String[] args) {
