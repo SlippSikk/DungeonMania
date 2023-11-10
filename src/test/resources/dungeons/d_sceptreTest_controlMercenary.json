@@ -2,7 +2,17 @@
     "entities": [
         {
             "type": "player",
+            "x": 0,
+            "y": 1
+        },
+        {
+            "type": "wood",
             "x": 1,
+            "y": 1
+        },
+        {
+            "type": "sun_stone",
+            "x": 2,
             "y": 1
         },
         {
@@ -11,22 +21,17 @@
             "y": 1
         },
         {
-            "type": "treasure",
-            "x": 4,
+            "type": "mercenary",
+            "x": 12,
             "y": 1
         },
         {
-            "type": "treasure",
-            "x": 5,
-            "y": 1
-        },
-        {
-            "type": "treasure",
-            "x": 6,
-            "y": 1
+            "type": "exit",
+            "x": 2,
+            "y": 2
         }
     ],
     "goal-condition": {
-        "goal": "treasure"
+        "goal": "exit"
     }
 }

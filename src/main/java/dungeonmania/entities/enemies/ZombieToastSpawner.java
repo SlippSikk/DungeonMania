@@ -18,7 +18,7 @@ public class ZombieToastSpawner extends Entity implements Interactable, OnDestro
     }
 
     public void spawn(Game game) {
-        game.spawnZombie(game, this);
+        game.getEntityFactory().spawnZombie(game, this);
     }
 
     @Override
@@ -29,7 +29,10 @@ public class ZombieToastSpawner extends Entity implements Interactable, OnDestro
 
     @Override
     public void interact(Player player, Game game) {
-        player.useWeapon(game);
+        player.getInventory().getWeapon().use(game);
+        GameMap gm = game.getMap();
+        gm.destroyEntity(this);
+
     }
 
     @Override
@@ -40,4 +43,5 @@ public class ZombieToastSpawner extends Entity implements Interactable, OnDestro
     public List<Position> getCardinallyAdjacentPositions() {
         return getPosition().getCardinallyAdjacentPositions();
     }
+
 }
