@@ -1,7 +1,7 @@
 package dungeonmania.goals;
 
 import dungeonmania.Game;
-import dungeonmania.entities.Switch;
+import dungeonmania.entities.conductors.Switch;
 
 public class GoalBoulders implements GoalStrategy {
     @Override

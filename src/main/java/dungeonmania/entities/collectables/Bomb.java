@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
-import dungeonmania.entities.Switch;
-import dungeonmania.entities.Wire;
+import dungeonmania.entities.conductors.Switch;
+import dungeonmania.entities.conductors.Wire;
 import dungeonmania.map.GameMap;
 
 public class Bomb extends CollectableEntity {
@@ -69,12 +69,14 @@ public class Bomb extends CollectableEntity {
 
     @Override
     public void onOverlap(GameMap map, Entity entity) {
+        System.out.println("overlap");
         if (state != State.SPAWNED)
             return;
 
         if (entity instanceof Player) {
             boolean wasPickedUp = onPickup(map, (Player) entity);
             if (wasPickedUp) {
+
                 subs.forEach(s -> s.unsubscribe(this));
                 wires.forEach(w -> w.removeLogicalBomb(this));
                 state = State.INVENTORY;
@@ -92,6 +94,9 @@ public class Bomb extends CollectableEntity {
                     .collect(Collectors.toList());
             List<Entity> wireEntities = map.getEntities(node).stream().filter(e -> (e instanceof Wire))
                     .collect(Collectors.toList());
+            // for (Entity e : wireEntities) {
+            //     System.out.println(e.getPosition());
+            // }
             switchEntities.stream().map(Switch.class::cast).forEach(s -> s.subscribe(this, map));
             switchEntities.stream().map(Switch.class::cast).forEach(s -> this.subscribe(s));
             wireEntities.stream().map(Wire.class::cast).forEach(w -> w.addLogicalBomb(this, map));
@@ -115,21 +120,21 @@ public class Bomb extends CollectableEntity {
     public boolean checkLogic() {
         switch (getLogic()) {
         case "and":
-            return wires.stream().allMatch(wire -> wire.isActive());
+            return wires.stream().allMatch(wire -> wire.isActivated());
         case "or":
-            return wires.stream().anyMatch(wire -> wire.isActive());
+            return wires.stream().anyMatch(wire -> wire.isActivated());
         case "xor":
-            return wires.stream().filter(wire -> wire.isActive()).count() == 1;
+            return wires.stream().filter(wire -> wire.isActivated()).count() == 1;
         case "co_and":
-            System.out.println("fesfegf");
-            return wires.stream().allMatch(wire -> wire.isActive()) && isallAdjWiresSameState();
+            System.out.println("co_and");
+            return wires.stream().allMatch(wire -> wire.isActivated()) && isallAdjWiresSameState();
         default:
             return false;
         }
     }
 
     public void checkAllWiresSameState() {
-        boolean bool = wires.stream().allMatch(w -> w.isActive()) || wires.stream().allMatch(w -> !w.isActive());
+        boolean bool = wires.stream().allMatch(w -> w.isActivated()) || wires.stream().allMatch(w -> !w.isActivated());
         setallAdjWiresSameState(bool);
     }
 

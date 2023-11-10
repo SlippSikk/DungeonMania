@@ -11,10 +11,10 @@ import dungeonmania.Game;
 import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.Portal;
-import dungeonmania.entities.Switch;
-import dungeonmania.entities.Wire;
 import dungeonmania.entities.collectables.Bomb;
 import dungeonmania.entities.collectables.potions.Potion;
+import dungeonmania.entities.conductors.Switch;
+import dungeonmania.entities.conductors.Wire;
 import dungeonmania.entities.enemies.Enemy;
 import dungeonmania.entities.enemies.ZombieToastSpawner;
 import dungeonmania.entities.logicalEntities.LogicalEntity;
@@ -58,16 +58,6 @@ public class GameMap {
                 }
             }
         }
-
-        // for (LogicalEntity le : logicalEntities) {
-        //     System.out.println("\nWires: " + le.getWires() + "\n");
-        // }
-        // for (Wire w : wires) {
-        //     // System.out.println("Wires: " + w.getWires());
-        //     // System.out.println("Logical Entities: " + w.getLogicalEntities());
-        //     // System.out.println("Switches: " + w.getSwitches());
-        //     System.out.println("Bombs: " + w.getBombs() + "\n");
-        // }
     }
 
     private void initRegisterWiresAndLogicalBombs() {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dungeonmania.entities.Entity;
-import dungeonmania.entities.Wire;
+import dungeonmania.entities.conductors.Wire;
 import dungeonmania.util.Position;
 
 public class LogicalEntity extends Entity {
@@ -21,13 +21,13 @@ public class LogicalEntity extends Entity {
     public boolean checkLogic() {
         switch (getLogic()) {
         case "and":
-            return wires.stream().allMatch(wire -> wire.isActive());
+            return wires.stream().allMatch(wire -> wire.isActivated());
         case "or":
-            return wires.stream().anyMatch(wire -> wire.isActive());
+            return wires.stream().anyMatch(wire -> wire.isActivated());
         case "xor":
-            return wires.stream().filter(wire -> wire.isActive()).count() == 1;
+            return wires.stream().filter(wire -> wire.isActivated()).count() == 1;
         case "co_and":
-            return wires.stream().allMatch(wire -> wire.isActive()) && isallAdjWiresSameState();
+            return wires.stream().allMatch(wire -> wire.isActivated()) && isallAdjWiresSameState();
         default:
             return false;
         }
@@ -35,7 +35,7 @@ public class LogicalEntity extends Entity {
 
     public void checkAllAdjWiresSameState() {
         setallAdjWiresSameState(
-                wires.stream().allMatch(w -> w.isActive()) || wires.stream().allMatch(w -> !w.isActive()));
+                wires.stream().allMatch(w -> w.isActivated()) || wires.stream().allMatch(w -> !w.isActivated()));
     }
 
     public boolean isallAdjWiresSameState() {

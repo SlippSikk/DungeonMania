@@ -11,6 +11,8 @@ import dungeonmania.entities.logicalEntities.SwitchDoor;
 import dungeonmania.map.GameMap;
 import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.InvisibilityPotion;
+import dungeonmania.entities.conductors.Switch;
+import dungeonmania.entities.conductors.Wire;
 import dungeonmania.util.Position;
 
 import java.util.ArrayList;
@@ -181,7 +183,7 @@ public class EntityFactory {
         case "light_bulb_off":
             return new LightBulb(pos, jsonEntity.getString("logic"));
         case "wire":
-            return new Wire(pos, false);
+            return new Wire(pos);
         case "switch_door":
             return new SwitchDoor(pos, jsonEntity.getString("logic"));
         default:
