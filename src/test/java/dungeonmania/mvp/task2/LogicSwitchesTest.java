@@ -366,6 +366,8 @@ public class LogicSwitchesTest {
     //     res = dmc.tick(Direction.DOWN);
     //     assertFalse(wireAt(res, 0, 4));
     //     assertFalse(wireAt(res, 1, 5));
+    //     assertTrue(wireAt(res, 2, 5));
+    //     assertTrue(wireAt(res, 3, 5));
     //     assertTrue(wireAt(res, 4, 4));
     //     assertTrue(wireAt(res, 3, 5));
 
@@ -472,18 +474,21 @@ public class LogicSwitchesTest {
     //     assertEquals(0, TestUtils.getEntities(res, "treasure").size());
     // }
 
-    public static void main(String[] args) {
-        DungeonManiaController dmc = new DungeonManiaController();
-        DungeonResponse res = dmc.newGame("d_logicSwitchesTest_lightBulbCoand", "c_logicSwitchesTest_lightBulbCoand");
+    // public static void main(String[] args) {
+    //     DungeonManiaController dmc = new DungeonManiaController();
+    //     DungeonResponse res = dmc.newGame("d_logicSwitchesTest_bomb", "c_logicSwitchesTest_bomb");
 
-        // light bulb at (6, 1) switched on
-        res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.RIGHT);
 
-        // light bulb at (4, 3) should stay off
-        res = dmc.tick(Direction.DOWN);
+    //     res = dmc.tick(Direction.DOWN);
 
-        // light bulb at (6, 1) switched off
-        res = dmc.tick(Direction.RIGHT);
-        res = dmc.tick(Direction.UP);
-    }
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.RIGHT);
+    //     res = dmc.tick(Direction.DOWN);
+
+    //     res = dmc.tick(Direction.RIGHT);
+    // }
 }

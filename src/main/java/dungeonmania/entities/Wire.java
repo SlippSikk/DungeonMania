@@ -29,11 +29,6 @@ public class Wire extends Entity {
     }
 
     public void notifyActivated(GameMap map) {
-        // check previous state of wire activation
-        // logicalEntities.stream().forEach(logicalEntity -> {
-        //     logicalEntity.checkAllWiresSameState();
-        // });
-
         if (!isActive()) {
             setActive(true);
             wires.stream().forEach(w -> w.notifyActivated(map));
@@ -42,11 +37,6 @@ public class Wire extends Entity {
     }
 
     public void notifyDeactivated(GameMap map) {
-        // check previous state of wire activation
-        // logicalEntities.stream().forEach(logicalEntity -> {
-        //     logicalEntity.checkAllWiresSameState();
-        // });
-
         if (isActive()) {
             Set<Wire> visitedWires = new HashSet<>();
             if (!checkActiveAdjSwitch(map, visitedWires)) {
@@ -83,10 +73,13 @@ public class Wire extends Entity {
         });
 
         logicalBombs.stream().forEach(logicalBomb -> {
+            System.out.println(isActive());
+            System.out.println(logicalBomb.checkLogic());
             if (isActive() && logicalBomb.checkLogic()) {
                 logicalBomb.notify(map);
             }
         });
+        System.out.println("\n");
     }
 
     public void addSwitch(Switch s) {
@@ -104,7 +97,7 @@ public class Wire extends Entity {
 
     public void addLogicalBomb(Bomb b, GameMap map) {
         logicalBombs.add(b);
-        if (isActive() && b.getLogic() != "") {
+        if (isActive() && b.isLogical()) {
             logicalBombs.stream().forEach(bomb -> bomb.notifyLogic(map));
         }
     }

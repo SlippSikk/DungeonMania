@@ -21,6 +21,7 @@ public class Bomb extends CollectableEntity {
     private State state;
     private int radius;
 
+    private boolean isLogical;
     private String logic;
     private boolean allAdjWiresSameState;
 
@@ -31,8 +32,16 @@ public class Bomb extends CollectableEntity {
         super(position);
         state = State.SPAWNED;
         this.radius = radius;
+        this.isLogical = true;
         this.logic = logic;
         this.allAdjWiresSameState = true;
+    }
+
+    public Bomb(Position position, int radius) {
+        super(position);
+        state = State.SPAWNED;
+        this.radius = radius;
+        this.isLogical = false;
     }
 
     public void subscribe(Switch s) {
@@ -60,7 +69,7 @@ public class Bomb extends CollectableEntity {
 
     @Override
     public void onOverlap(GameMap map, Entity entity) {
-        if (state != State.SPAWNED && state != State.PLACED)
+        if (state != State.SPAWNED)
             return;
 
         if (entity instanceof Player) {
@@ -79,12 +88,14 @@ public class Bomb extends CollectableEntity {
         this.state = State.PLACED;
         List<Position> adjPosList = getPosition().getCardinallyAdjacentPositions();
         adjPosList.stream().forEach(node -> {
-            List<Entity> entities = map.getEntities(node).stream().filter(e -> (e instanceof Switch))
+            List<Entity> switchEntities = map.getEntities(node).stream().filter(e -> (e instanceof Switch))
                     .collect(Collectors.toList());
-            entities.stream().map(Switch.class::cast).forEach(s -> s.subscribe(this, map));
-            entities.stream().map(Switch.class::cast).forEach(s -> this.subscribe(s));
-            entities.stream().map(Wire.class::cast).forEach(w -> w.addLogicalBomb(this, map));
-            entities.stream().map(Wire.class::cast).forEach(w -> this.addWire(w));
+            List<Entity> wireEntities = map.getEntities(node).stream().filter(e -> (e instanceof Wire))
+                    .collect(Collectors.toList());
+            switchEntities.stream().map(Switch.class::cast).forEach(s -> s.subscribe(this, map));
+            switchEntities.stream().map(Switch.class::cast).forEach(s -> this.subscribe(s));
+            wireEntities.stream().map(Wire.class::cast).forEach(w -> w.addLogicalBomb(this, map));
+            wireEntities.stream().map(Wire.class::cast).forEach(w -> this.addWire(w));
         });
     }
 
@@ -110,6 +121,7 @@ public class Bomb extends CollectableEntity {
         case "xor":
             return wires.stream().filter(wire -> wire.isActive()).count() == 1;
         case "co_and":
+            System.out.println("fesfegf");
             return wires.stream().allMatch(wire -> wire.isActive()) && isallAdjWiresSameState();
         default:
             return false;
@@ -135,5 +147,9 @@ public class Bomb extends CollectableEntity {
 
     public String getLogic() {
         return logic;
+    }
+
+    public boolean isLogical() {
+        return isLogical;
     }
 }

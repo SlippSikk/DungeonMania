@@ -1,6 +1,11 @@
 {
     "entities": [
         {
+            "x": 2,
+            "y": 6,
+            "type": "bomb"
+        },
+        {
             "x": 3,
             "y": 0,
             "type": "wire"

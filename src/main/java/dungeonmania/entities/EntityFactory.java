@@ -152,10 +152,10 @@ public class EntityFactory {
             return new Arrow(pos);
         case "bomb":
             int bombRadius = config.optInt("bomb_radius", Bomb.DEFAULT_RADIUS);
-            String logic = config.optString("logic");
-            if (logic == "") {
-                return new Bomb(pos, bombRadius, null);
+            if (!jsonEntity.has("logic")) {
+                return new Bomb(pos, bombRadius);
             } else {
+                String logic = config.optString("logic");
                 return new Bomb(pos, bombRadius, logic);
             }
         case "invisibility_potion":
