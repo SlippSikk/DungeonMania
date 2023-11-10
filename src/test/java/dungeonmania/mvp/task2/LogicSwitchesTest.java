@@ -348,6 +348,7 @@ public class LogicSwitchesTest {
         DungeonResponse res = dmc.newGame("d_logicSwitchesTest_bomb", "c_logicSwitchesTest_bomb");
 
         res = dmc.tick(Direction.RIGHT);
+        assertTrue(boulderAt(res, 2, 1));
         assertTrue(wireAt(res, 7, 1));
         assertTrue(wireAt(res, 6, 2));
         // assertFalse(wireAt(res, 3, 1));
@@ -382,7 +383,7 @@ public class LogicSwitchesTest {
         String config = "c_logicSwitchesTest_bombDestroyCircuit";
         DungeonResponse res = dmc.newGame("d_logicSwitchesTest_bombDestoryCircuit", config);
 
-        // // logical bomb explodes
+        // logical bomb explodes
         // res = dmc.tick(Direction.RIGHT);
         // assertFalse(wireAt(res, 4, 2));
         // assertFalse(wireAt(res, 3, 3));

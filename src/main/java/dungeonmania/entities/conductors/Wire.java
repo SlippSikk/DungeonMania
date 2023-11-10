@@ -60,10 +60,14 @@ public class Wire extends Conductor {
             logicalEntity.update();
         });
 
+        // for (Bomb b : getLogicalBombs()) {
+        //     System.out.println(b.getPosition());
+        // }
+        // System.out.println("\n");
+
         getLogicalBombs().stream().forEach(logicalBomb -> {
-            // System.out.println(isActivated());
             // System.out.println(logicalBomb.checkLogic());
-            if (isActivated() && logicalBomb.checkLogic()) {
+            if (logicalBomb.checkLogic()) {
                 logicalBomb.notify(map);
             }
         });

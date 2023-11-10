@@ -32,10 +32,10 @@ public class GameMap {
      * 2. register all movables
      * 3. register all spawners
      * 4. register bombs and switches
-     * 5. register switches and wires
-     * 6. register wires and logical bombs
-     * 7. register wires and logical entities
-     * 8. register switches and logical entities
+     * 6. register switches and wires
+     * 7. register wires and logical bombs
+     * 8. register wires and logical entities
+     * 9. register switches and logical entities
      */
     public void init() {
         initPairPortals();

@@ -94,9 +94,6 @@ public class Bomb extends CollectableEntity {
                     .collect(Collectors.toList());
             List<Entity> wireEntities = map.getEntities(node).stream().filter(e -> (e instanceof Wire))
                     .collect(Collectors.toList());
-            // for (Entity e : wireEntities) {
-            //     System.out.println(e.getPosition());
-            // }
             switchEntities.stream().map(Switch.class::cast).forEach(s -> s.subscribe(this, map));
             switchEntities.stream().map(Switch.class::cast).forEach(s -> this.subscribe(s));
             wireEntities.stream().map(Wire.class::cast).forEach(w -> w.addLogicalBomb(this, map));
@@ -118,6 +115,13 @@ public class Bomb extends CollectableEntity {
     }
 
     public boolean checkLogic() {
+        for (Wire w : wires) {
+            System.out.println(w.getPosition());
+            System.out.println(w.isActivated());
+            System.out.println("\n");
+        }
+        System.out.println("\n");
+
         switch (getLogic()) {
         case "and":
             return wires.stream().allMatch(wire -> wire.isActivated());
