@@ -69,7 +69,6 @@ public class Bomb extends CollectableEntity {
 
     @Override
     public void onOverlap(GameMap map, Entity entity) {
-        System.out.println("overlap");
         if (state != State.SPAWNED)
             return;
 
@@ -98,6 +97,9 @@ public class Bomb extends CollectableEntity {
             switchEntities.stream().map(Switch.class::cast).forEach(s -> this.subscribe(s));
             wireEntities.stream().map(Wire.class::cast).forEach(w -> w.addLogicalBomb(this, map));
             wireEntities.stream().map(Wire.class::cast).forEach(w -> this.addWire(w));
+            if (isLogical()) {
+                this.notifyLogic(map);
+            }
         });
     }
 
@@ -108,30 +110,27 @@ public class Bomb extends CollectableEntity {
             for (int j = y - radius; j <= y + radius; j++) {
                 List<Entity> entities = map.getEntities(new Position(i, j));
                 entities = entities.stream().filter(e -> !(e instanceof Player)).collect(Collectors.toList());
-                for (Entity e : entities)
+                for (Entity e : entities) {
                     map.destroyEntity(e);
+                    if (e instanceof Wire)
+                        ((Wire) e).clearLists();
+                }
             }
         }
     }
 
     public boolean checkLogic() {
-        for (Wire w : wires) {
-            System.out.println(w.getPosition());
-            System.out.println(w.isActivated());
-            System.out.println("\n");
-        }
-        System.out.println("\n");
-
         switch (getLogic()) {
         case "and":
-            return wires.stream().allMatch(wire -> wire.isActivated());
+            return wires.stream().allMatch(w -> w.isActivated())
+                    && wires.stream().filter(w -> w.isActivated()).count() > 1;
         case "or":
-            return wires.stream().anyMatch(wire -> wire.isActivated());
+            return wires.stream().anyMatch(w -> w.isActivated());
         case "xor":
-            return wires.stream().filter(wire -> wire.isActivated()).count() == 1;
+            return wires.stream().filter(w -> w.isActivated()).count() == 1;
         case "co_and":
-            System.out.println("co_and");
-            return wires.stream().allMatch(wire -> wire.isActivated()) && isallAdjWiresSameState();
+            return wires.stream().allMatch(w -> w.isActivated()) && isallAdjWiresSameState()
+                    && wires.stream().filter(w -> w.isActivated()).count() > 1;
         default:
             return false;
         }
@@ -160,5 +159,9 @@ public class Bomb extends CollectableEntity {
 
     public boolean isLogical() {
         return isLogical;
+    }
+
+    public List<Wire> getWires() {
+        return wires;
     }
 }

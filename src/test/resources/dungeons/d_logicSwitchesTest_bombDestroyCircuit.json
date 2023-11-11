@@ -43,7 +43,8 @@
         {
             "x": 4,
             "y": 3,
-            "type": "bomb"
+            "type": "bomb",
+            "logic": "xor"
         },
         {
             "x": 5,
@@ -73,12 +74,14 @@
         {
             "x": 7,
             "y": 4,
-            "type": "bomb"
+            "type": "bomb",
+            "logic": "or"
         },
         {
             "x": 3,
             "y": 5,
-            "type": "light_bulb_off"
+            "type": "light_bulb_off",
+            "logic": "or"
         },
         {
             "x": 6,

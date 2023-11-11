@@ -2,6 +2,7 @@ package dungeonmania.entities.conductors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import dungeonmania.entities.Boulder;
 import dungeonmania.entities.Entity;
@@ -39,6 +40,9 @@ public class Switch extends Conductor implements OnMovedAway {
             map.checkCoAnd();
             getWires().stream().forEach(w -> w.notifyActivated(map));
             getLogicalEntities().stream().forEach(le -> le.update());
+            List<Bomb> logicalBombEntities = map.getEntities(Bomb.class).stream().filter(b -> b.isLogical())
+                    .collect(Collectors.toList());
+            logicalBombEntities.stream().forEach(lb -> lb.notifyLogic(map));
             bombs.stream().forEach(b -> b.notify(map));
         }
     }
@@ -50,6 +54,7 @@ public class Switch extends Conductor implements OnMovedAway {
             map.checkCoAnd();
             getWires().stream().forEach(w -> w.notifyDeactivated(map));
             getLogicalEntities().stream().forEach(le -> le.update());
+            getLogicalBombs().stream().forEach(lb -> lb.notifyLogic(map));
         }
     }
 }

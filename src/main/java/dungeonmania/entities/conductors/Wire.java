@@ -59,19 +59,6 @@ public class Wire extends Conductor {
         getLogicalEntities().stream().forEach(logicalEntity -> {
             logicalEntity.update();
         });
-
-        // for (Bomb b : getLogicalBombs()) {
-        //     System.out.println(b.getPosition());
-        // }
-        // System.out.println("\n");
-
-        getLogicalBombs().stream().forEach(logicalBomb -> {
-            // System.out.println(logicalBomb.checkLogic());
-            if (logicalBomb.checkLogic()) {
-                logicalBomb.notify(map);
-            }
-        });
-        // System.out.println("\n");
     }
 
     public void addSwitch(Switch s) {
@@ -82,10 +69,16 @@ public class Wire extends Conductor {
         switches.remove(s);
     }
 
+    @Override
+    public void clearLists() {
+        switches.clear();
+        super.clearLists();
+    }
+
     public void addLogicalBomb(Bomb b, GameMap map) {
         getLogicalBombs().add(b);
-        if (isActivated() && b.isLogical()) {
-            getLogicalBombs().stream().forEach(bomb -> bomb.notifyLogic(map));
-        }
+        // if (isActivated() && b.isLogical()) {
+        //     getLogicalBombs().stream().forEach(bomb -> bomb.notifyLogic(map));
+        // }
     }
 }

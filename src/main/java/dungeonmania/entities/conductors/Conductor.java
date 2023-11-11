@@ -30,6 +30,12 @@ public class Conductor extends Entity {
             wires.add(w);
     }
 
+    public void clearLists() {
+        wires.clear();
+        logicalEntities.clear();
+        logicalBombs.clear();
+    }
+
     public void removeWire(Wire w) {
         wires.remove(w);
     }
