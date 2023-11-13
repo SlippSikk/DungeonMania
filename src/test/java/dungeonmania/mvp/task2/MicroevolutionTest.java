@@ -173,32 +173,4 @@ public class MicroevolutionTest {
         res = assertDoesNotThrow(() -> dmc.interact(zombieSp));
         assertFalse(TestUtils.getGoals(res).contains(":enemies"));
     }
-
-    // optional tests: may or may not implement later depending on time
-    @Test
-    @Tag("16-6")
-    @DisplayName("Test complex goal: enemies AND boulders AND exit")
-    public void complexGoalEnemies2() {
-        DungeonManiaController dmc = new DungeonManiaController();
-        String config = "c_microevolutionTest_complexGoalEnemies2";
-        DungeonResponse res = dmc.newGame("d_microevolutionTest_complexGoalEnemies2", config);
-    }
-
-    @Test
-    @Tag("16-7")
-    @DisplayName("Test complex goal: boulders AND treasure OR enemies")
-    public void complexGoalEnemies3() {
-        DungeonManiaController dmc = new DungeonManiaController();
-        String config = "c_microevolutionTest_complexGoalEnemies3";
-        DungeonResponse res = dmc.newGame("d_microevolutionTest_complexGoalEnemies3", config);
-    }
-
-    @Test
-    @Tag("16-8")
-    @DisplayName("Test complex goal enemies: boulders AND treasure OR enemies 2")
-    public void complexGoalEnemies4() {
-        DungeonManiaController dmc = new DungeonManiaController();
-        String config = "c_microevolutionTest_complexGoalEnemies3";
-        DungeonResponse res = dmc.newGame("d_microevolutionTest_complexGoalEnemies3", config);
-    }
 }

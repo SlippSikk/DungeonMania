@@ -23,14 +23,18 @@ public class LogicalEntity extends Entity {
     public boolean checkLogic() {
         switch (getLogic()) {
         case "and":
-            return wires.stream().allMatch(w -> w.isActivated()) && switches.stream().allMatch(s -> s.isActivated());
+            return wires.stream().allMatch(w -> w.isActivated()) && switches.stream().allMatch(s -> s.isActivated())
+                    && (wires.stream().filter(w -> w.isActivated()).count()
+                            + switches.stream().filter(s -> s.isActivated()).count()) > 1;
         case "or":
             return wires.stream().anyMatch(w -> w.isActivated()) || switches.stream().anyMatch(s -> s.isActivated());
         case "xor":
             return wires.stream().filter(w -> w.isActivated()).count()
                     + switches.stream().filter(s -> s.isActivated()).count() == 1;
         case "co_and":
-            return wires.stream().allMatch(w -> w.isActivated()) && isallAdjWiresSameState();
+            return wires.stream().allMatch(w -> w.isActivated()) && isallAdjWiresSameState()
+                    && (wires.stream().filter(w -> w.isActivated()).count()
+                            + switches.stream().filter(s -> s.isActivated()).count()) > 1;
         default:
             return false;
         }
